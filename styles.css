@@ -12,10 +12,20 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
@@ -459,5 +469,118 @@ ul {
 
   .vertical-label {
     display: none;
+  }
+}
+
+/* ---------- ABOUT MEAGHAN ---------- */
+
+.about {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.about-photo {
+  width: 42%;
+  flex-shrink: 0;
+  background: var(--gray-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 480px;
+}
+
+.about-photo span {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6b6b6b;
+  padding: 0 2rem;
+}
+
+.about-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 5rem 5.5rem;
+  max-width: 44rem;
+}
+
+.about-heading {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(2.25rem, 3.6vw, 3.25rem);
+  line-height: 1.05;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.about-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #333333;
+  margin: 0;
+  max-width: 38rem;
+}
+
+.about-credentials {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin: 0.5rem 0 0;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid #e2e2e2;
+}
+
+.about-credentials li {
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  color: var(--black);
+  font-weight: 500;
+}
+
+.about-credentials li::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-right: 0.65rem;
+  vertical-align: middle;
+}
+
+.about-link {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+  transition: opacity 0.2s ease;
+}
+
+.about-link:hover {
+  opacity: 0.7;
+}
+
+@media (max-width: 900px) {
+  .about {
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .about-photo {
+    width: 100%;
+    min-height: 320px;
+  }
+
+  .about-content {
+    padding: 3rem 1.75rem 4rem 2.75rem;
+    max-width: none;
   }
 }
