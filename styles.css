@@ -232,11 +232,48 @@ ul {
   height: 295px;
 }
 
-/* the centered about-content column grows to fill more of the width as
-   the viewport narrows, so left:16% starts running into its text below
-   this point — hide rather than let them overlap */
+/* Variant E: left margin, carrying the eye from the navy About band down
+   across the boundary into the first testimonial */
+.guide-arrow-testimonials {
+  position: absolute;
+  left: 4%;
+  /* starts inside the About band above and lands just short of quote 1 */
+  top: -170px;
+  width: 120px;
+  height: 370px;
+}
+
+/* Zigzag guides: in-flow between quote blocks, so they always land in the
+   gap no matter how the quotes above them wrap */
+.guide-arrow-zigzag {
+  display: block;
+  align-self: center;
+  height: auto;
+  /* pull the flex gap back in — the arrow's own sweep is the whitespace */
+  margin: -2.25rem 0;
+}
+
+.guide-arrow-zigzag-a {
+  width: 40%;
+  aspect-ratio: 312 / 136;
+}
+
+.guide-arrow-zigzag-b {
+  width: 52%;
+  aspect-ratio: 526 / 150;
+}
+
+/* compact quote-to-quote curl; shown only below 768px, see media query */
+.guide-arrow-quotes-mobile {
+  display: none;
+}
+
+/* the centered content columns grow to fill more of the width as the
+   viewport narrows, so these left-margin arrows start running into their
+   text below this point — hide rather than let them overlap */
 @media (max-width: 1400px) {
-  .guide-arrow-about {
+  .guide-arrow-about,
+  .guide-arrow-testimonials {
     display: none;
   }
 }
@@ -340,12 +377,12 @@ ul {
   animation: fadeIn 0.7s ease forwards;
 }
 
-.corner-menu .dropdown:nth-child(1) .dropdown-toggle { animation-delay: 0.3s; }
-.corner-menu .dropdown:nth-child(2) .dropdown-toggle { animation-delay: 0.4s; }
-.corner-menu .dropdown:nth-child(3) .dropdown-toggle { animation-delay: 0.5s; }
-
-/* the plain "Book a Session" link (4th menu-col, not a dropdown) reuses
-   .dropdown-toggle for identical typography, minus the panel/chevron */
+/* delays run across every top-level entry in order, dropdown or not — the
+   plain links ("Home", "Book a Session") reuse .dropdown-toggle for
+   identical typography, minus the panel and chevron */
+.corner-menu .menu-col:nth-child(1) .dropdown-toggle { animation-delay: 0.3s; }
+.corner-menu .menu-col:nth-child(2) .dropdown-toggle { animation-delay: 0.4s; }
+.corner-menu .menu-col:nth-child(3) .dropdown-toggle { animation-delay: 0.5s; }
 .corner-menu .menu-col:nth-child(4) .dropdown-toggle { animation-delay: 0.6s; }
 
 .dropdown-toggle .chev {
@@ -469,7 +506,7 @@ ul {
   animation: fadeIn 0.7s ease forwards;
 }
 
-.mobile-menu h4:first-child {
+.mobile-menu > :first-child {
   margin-top: 0;
 }
 
@@ -494,19 +531,18 @@ ul {
   text-decoration-thickness: 2px;
 }
 
-/* opening the hamburger replays the page-load entrance animation */
-.mobile-menu h4:nth-of-type(1) { animation-delay: 0.05s; }
-.mobile-menu h4:nth-of-type(2) { animation-delay: 0.2s; }
-.mobile-menu h4:nth-of-type(3) { animation-delay: 0.35s; }
+/* opening the hamburger replays the page-load entrance animation, in the
+   same top-to-bottom order the entries appear: Home, About, Contact, Book */
+.mobile-menu h4:nth-of-type(1) { animation-delay: 0.14s; }
+.mobile-menu h4:nth-of-type(2) { animation-delay: 0.32s; }
 
-.mobile-menu ul:nth-of-type(1) li:nth-child(1) a { animation-delay: 0.1s; }
-.mobile-menu ul:nth-of-type(2) li:nth-child(1) a { animation-delay: 0.25s; }
-.mobile-menu ul:nth-of-type(2) li:nth-child(2) a { animation-delay: 0.31s; }
-.mobile-menu ul:nth-of-type(2) li:nth-child(3) a { animation-delay: 0.37s; }
-.mobile-menu ul:nth-of-type(3) li:nth-child(1) a { animation-delay: 0.4s; }
-.mobile-menu ul:nth-of-type(3) li:nth-child(2) a { animation-delay: 0.46s; }
+.mobile-menu ul:nth-of-type(1) li:nth-child(1) a { animation-delay: 0.2s; }
+.mobile-menu ul:nth-of-type(1) li:nth-child(2) a { animation-delay: 0.26s; }
+.mobile-menu ul:nth-of-type(1) li:nth-child(3) a { animation-delay: 0.32s; }
+.mobile-menu ul:nth-of-type(2) li:nth-child(1) a { animation-delay: 0.38s; }
+.mobile-menu ul:nth-of-type(2) li:nth-child(2) a { animation-delay: 0.44s; }
 
-/* the plain "Book a Session" link, after the Contact group */
+/* the plain top-level links ("Home" first, "Book a Session" last) */
 .mobile-menu-link {
   display: block;
   margin-top: 1.1rem;
@@ -517,7 +553,11 @@ ul {
   font-weight: 600;
   opacity: 0;
   animation: fadeIn 0.7s ease forwards;
-  animation-delay: 0.52s;
+  animation-delay: 0.5s;
+}
+
+.mobile-menu-link:first-child {
+  animation-delay: 0.05s;
 }
 
 /* ---------- DARK SECTIONS (even sections: navy band) ---------- */
@@ -621,6 +661,99 @@ ul {
 
 .about-link:hover {
   text-decoration-thickness: 2px;
+}
+
+/* ---------- SECTION 3: TESTIMONIALS ---------- */
+
+.testimonials {
+  position: relative;
+  background: var(--ivory);
+  padding: 6rem 2rem 7rem;
+}
+
+.testimonials-inner {
+  max-width: 62rem;
+  margin: 0 auto;
+}
+
+.testimonials-heading {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(2.25rem, 3.6vw, 3.25rem);
+  line-height: 1.05;
+  margin: 0 0 4rem;
+  text-align: center;
+  text-wrap: balance;
+  color: var(--navy);
+}
+
+/* no cards or rules here — the alternating alignment and the gaps do all
+   of the organizing, so the section stays quiet next to the navy band */
+.quote-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+
+.quote-block {
+  width: 52%;
+  margin: 0;
+}
+
+.quote-left {
+  align-self: flex-start;
+  text-align: left;
+}
+
+.quote-right {
+  align-self: flex-end;
+  text-align: right;
+}
+
+.quote-block blockquote {
+  margin: 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.05rem, 1.55vw, 1.3rem);
+  line-height: 1.6;
+  color: var(--navy);
+  text-wrap: pretty;
+}
+
+.quote-attribution {
+  margin-top: 1rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--navy-soft);
+}
+
+.quote-attribution::before {
+  content: '';
+  display: inline-block;
+  width: 1.4rem;
+  height: 1px;
+  background: var(--logo-blue);
+  margin-right: 0.6rem;
+  vertical-align: middle;
+}
+
+.quote-right .quote-attribution::before {
+  margin: 0 0 0 0.6rem;
+  float: right;
+  /* nudge onto the text's optical baseline now that it's floated */
+  margin-top: 0.55rem;
+}
+
+.quote-affiliation {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  font-weight: 400;
 }
 
 /* ---------- FULL STORY PAGE ---------- */
@@ -1037,6 +1170,20 @@ ul {
     display: none;
   }
 
+  /* the zigzag collapses to a single column below this width, so the two
+     horizontal weaves give way to one compact downward curl */
+  .guide-arrow-zigzag {
+    display: none;
+  }
+
+  .guide-arrow-quotes-mobile {
+    display: block;
+    align-self: center;
+    width: 58px;
+    height: 82px;
+    margin: -0.5rem 0;
+  }
+
   .guide-arrow-story-cta {
     width: 70px;
     height: 128px;
@@ -1049,6 +1196,30 @@ ul {
 
   .about-content {
     padding: 3.5rem 1.75rem 4.5rem;
+  }
+
+  .testimonials {
+    padding: 3.5rem 1.75rem 4.5rem;
+  }
+
+  .testimonials-heading {
+    margin-bottom: 2.5rem;
+  }
+
+  .quote-stack {
+    gap: 2.75rem;
+  }
+
+  /* one column, all flush left — right-ragged body copy reads poorly at
+     phone widths, so the alternation gives way to plain readability */
+  .quote-block {
+    width: 100%;
+    text-align: left;
+  }
+
+  .quote-right .quote-attribution::before {
+    float: none;
+    margin: 0 0.6rem 0 0;
   }
 
   .story-header {

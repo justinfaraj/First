@@ -2,18 +2,16 @@
 // Injected into every page via #site-nav / #site-footer placeholders so
 // future section additions only need to change the NAV_GROUPS list here.
 
-const NAV_GROUPS = [
-  {
-    label: 'Home',
-    items: [
-      { text: 'Meet Meaghan', section: 'about-meaghan' },
-    ],
-  },
+// One ordered list of top-level nav entries. An entry with `items` renders
+// as a dropdown; an entry without renders as a plain link that navigates
+// straight there. Order here is the order on the page.
+const NAV_ITEMS = [
+  { label: 'Home', section: 'home' },
   {
     label: 'About',
     items: [
       { text: "Meaghan's Story", href: 'about-meaghan.html' },
-      { text: 'Testimonials', href: '#' },
+      { text: 'Testimonials', section: 'testimonials' },
       { text: 'Documents', href: 'documents.html' },
     ],
   },
@@ -24,12 +22,7 @@ const NAV_GROUPS = [
       { text: 'FAQ', href: '#' },
     ],
   },
-];
-
-// A plain top-level link alongside the Home/About/Contact dropdowns —
-// not a dropdown itself, just navigates straight to the booking page.
-const NAV_LINKS = [
-  { text: 'Book a Session', href: 'book-a-session.html' },
+  { label: 'Book a Session', href: 'book-a-session.html' },
 ];
 
 // A "section" link scrolls within the current page if that section
@@ -45,34 +38,38 @@ function resolveHref(item) {
 }
 
 function renderNav() {
-  const dropdowns = NAV_GROUPS.map((group) => `
-    <div class="menu-col dropdown">
-      <button class="dropdown-toggle" type="button" aria-expanded="false">
-        ${group.label}
-        <svg class="chev" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1 L5 5 L9 1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <ul class="dropdown-panel">
-        ${group.items.map((item) => `<li><a href="${resolveHref(item)}">${item.text}</a></li>`).join('')}
+  const cornerItems = NAV_ITEMS.map((entry) => {
+    if (!entry.items) {
+      return `
+        <div class="menu-col">
+          <a class="dropdown-toggle nav-plain-link" href="${resolveHref(entry)}">${entry.label}</a>
+        </div>
+      `;
+    }
+    return `
+      <div class="menu-col dropdown">
+        <button class="dropdown-toggle" type="button" aria-expanded="false">
+          ${entry.label}
+          <svg class="chev" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1 L5 5 L9 1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="dropdown-panel">
+          ${entry.items.map((item) => `<li><a href="${resolveHref(item)}">${item.text}</a></li>`).join('')}
+        </ul>
+      </div>
+    `;
+  }).join('');
+
+  const mobileItems = NAV_ITEMS.map((entry) => {
+    if (!entry.items) {
+      return `<a class="mobile-menu-link" href="${resolveHref(entry)}">${entry.label}</a>`;
+    }
+    return `
+      <h4>${entry.label}</h4>
+      <ul>
+        ${entry.items.map((item) => `<li><a href="${resolveHref(item)}">${item.text}</a></li>`).join('')}
       </ul>
-    </div>
-  `).join('');
-
-  const plainLinks = NAV_LINKS.map((item) => `
-    <div class="menu-col">
-      <a class="dropdown-toggle nav-plain-link" href="${resolveHref(item)}">${item.text}</a>
-    </div>
-  `).join('');
-
-  const mobileGroups = NAV_GROUPS.map((group) => `
-    <h4>${group.label}</h4>
-    <ul>
-      ${group.items.map((item) => `<li><a href="${resolveHref(item)}">${item.text}</a></li>`).join('')}
-    </ul>
-  `).join('');
-
-  const mobileLinks = NAV_LINKS.map((item) => `
-    <a class="mobile-menu-link" href="${resolveHref(item)}">${item.text}</a>
-  `).join('');
+    `;
+  }).join('');
 
   return `
     <div class="mobile-nav">
@@ -82,14 +79,12 @@ function renderNav() {
         <span class="bar"></span>
       </button>
       <nav class="mobile-menu" id="mobile-menu" hidden>
-        ${mobileGroups}
-        ${mobileLinks}
+        ${mobileItems}
       </nav>
     </div>
 
     <nav class="corner-menu" aria-label="Primary">
-      ${dropdowns}
-      ${plainLinks}
+      ${cornerItems}
     </nav>
   `;
 }
