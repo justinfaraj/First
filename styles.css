@@ -242,18 +242,37 @@ ul {
   height: calc(66% + 70px);
 }
 
-.section-arrow {
-  position: relative;
-  height: 0;
-  z-index: 5;
+/* Variant B: left side of the About section, pointing into the story link */
+.guide-arrow-about {
+  position: absolute;
+  left: 16%;
+  bottom: 9rem;
+  width: 130px;
+  height: 295px;
 }
 
-.section-arrow .guide-arrow {
+/* Variant D: right margin of the story page, header into the story */
+.guide-arrow-story-top {
   position: absolute;
-  right: 5%;
-  top: -130px;
-  height: 260px;
-  width: 90px;
+  top: 0.5rem;
+  right: -12rem;
+  width: 120px;
+  height: 344px;
+}
+
+/* Variant C: short flick from the story into the booking CTA */
+.guide-arrow-story-cta {
+  display: block;
+  width: 84px;
+  height: 154px;
+  margin: 2.5rem 0 -2rem 0.75rem;
+}
+
+/* not enough right margin for the corkscrew on mid-size screens */
+@media (max-width: 1150px) {
+  .guide-arrow-story-top {
+    display: none;
+  }
 }
 
 /* ---------- RIGHT PANEL: PHOTO + CALLOUT ---------- */
@@ -448,6 +467,7 @@ ul {
 /* ---------- SECTION 2: ABOUT ---------- */
 
 .about {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -566,6 +586,7 @@ ul {
 }
 
 .story {
+  position: relative;
   max-width: 46rem;
   margin: 0 auto;
   padding: 5rem 2rem 7rem;
@@ -702,11 +723,15 @@ ul {
     margin: 1rem auto -70px;
   }
 
-  .section-arrow .guide-arrow {
-    right: 8%;
-    top: -100px;
-    height: 200px;
+  .guide-arrow-about,
+  .guide-arrow-story-top {
+    display: none;
+  }
+
+  .guide-arrow-story-cta {
     width: 70px;
+    height: 128px;
+    margin: 2rem 0 -1.5rem 0.5rem;
   }
 
   .about {
