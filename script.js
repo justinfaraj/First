@@ -1,4 +1,96 @@
+// ---------- SHARED NAV + FOOTER (single source of truth) ----------
+// Injected into every page via #site-nav / #site-footer placeholders so
+// future section additions only need to change the NAV_GROUPS list here.
+
+const NAV_GROUPS = [
+  {
+    label: 'Home',
+    items: [
+      { text: 'Meet Meaghan', section: 'about-meaghan' },
+    ],
+  },
+  {
+    label: 'About',
+    items: [
+      { text: "Meaghan's Story", href: 'about-meaghan.html' },
+      { text: 'Testimonials', href: '#' },
+      { text: 'Documents', href: '#' },
+    ],
+  },
+  {
+    label: 'Contact',
+    items: [
+      { text: 'Book a Session', href: '#' },
+      { text: 'Send a Message', href: '#' },
+      { text: 'FAQ', href: '#' },
+    ],
+  },
+];
+
+// A "section" link scrolls within the current page if that section
+// exists here, otherwise it navigates to the homepage and scrolls there.
+function resolveHref(item) {
+  if (item.href) return item.href;
+  const onThisPage = document.getElementById(item.section);
+  return onThisPage ? `#${item.section}` : `index.html#${item.section}`;
+}
+
+function renderNav() {
+  const dropdowns = NAV_GROUPS.map((group) => `
+    <div class="menu-col dropdown">
+      <button class="dropdown-toggle" type="button" aria-expanded="false">
+        ${group.label}
+        <svg class="chev" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1 L5 5 L9 1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <ul class="dropdown-panel">
+        ${group.items.map((item) => `<li><a href="${resolveHref(item)}">${item.text}</a></li>`).join('')}
+      </ul>
+    </div>
+  `).join('');
+
+  const mobileGroups = NAV_GROUPS.map((group) => `
+    <h4>${group.label}</h4>
+    <ul>
+      ${group.items.map((item) => `<li><a href="${resolveHref(item)}">${item.text}</a></li>`).join('')}
+    </ul>
+  `).join('');
+
+  return `
+    <div class="mobile-nav">
+      <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <nav class="mobile-menu" id="mobile-menu" hidden>
+        ${mobileGroups}
+      </nav>
+    </div>
+
+    <nav class="corner-menu" aria-label="Primary">
+      ${dropdowns}
+    </nav>
+  `;
+}
+
+function renderFooter() {
+  return `
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <p class="footer-copyright">Copyright &copy; 2025 Eagle Point Coaching LLC. All Rights Reserved.</p>
+        <p class="footer-credit">Website developed by Justin Farajollah. Email <a href="mailto:farajollahjustin@gmail.com" class="footer-link">farajollahjustin@gmail.com</a> to make your website vision a reality.</p>
+      </div>
+    </footer>
+  `;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  const navSlot = document.getElementById('site-nav');
+  if (navSlot) navSlot.innerHTML = renderNav();
+
+  const footerSlot = document.getElementById('site-footer');
+  if (footerSlot) footerSlot.innerHTML = renderFooter();
+
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (prefersReducedMotion) {

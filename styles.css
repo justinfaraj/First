@@ -301,6 +301,15 @@ ul {
   text-decoration-thickness: 2px;
 }
 
+/* ---------- SHARED NAV SLOT ---------- */
+
+/* the placeholder itself shouldn't participate in layout — its injected
+   children (.mobile-nav, .corner-menu) become direct flex/flow children
+   of whatever page-specific container hosts #site-nav */
+#site-nav {
+  display: contents;
+}
+
 /* ---------- CORNER MENU (dropdowns) ---------- */
 
 .corner-menu {
@@ -600,12 +609,19 @@ ul {
 /* ---------- FULL STORY PAGE ---------- */
 
 .story-header {
+  position: relative;
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 2rem;
   padding: 2.25rem 3rem;
   border-bottom: 1px solid var(--rule);
+}
+
+/* the corner-menu's margin-bottom is for hero spacing; inside the story
+   header it should just sit centered with its siblings */
+.story-header .corner-menu {
+  margin-bottom: 0;
 }
 
 .story-wordmark {
@@ -679,6 +695,56 @@ ul {
   margin-top: 3.5rem;
   padding-top: 2.5rem;
   border-top: 1px solid var(--rule);
+}
+
+/* ---------- SITE FOOTER ---------- */
+
+.site-footer {
+  background: var(--navy);
+  color: var(--ivory);
+}
+
+.site-footer-inner {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 3.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.footer-copyright {
+  margin: 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  color: var(--ivory);
+}
+
+.footer-credit {
+  margin: 0;
+  padding-top: 1rem;
+  width: 100%;
+  border-top: 1px solid rgba(98, 162, 224, 0.3);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+  color: var(--ivory);
+  opacity: 0.85;
+}
+
+.footer-link {
+  color: var(--ivory);
+  text-decoration: underline;
+  text-decoration-color: var(--logo-blue);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  opacity: 1;
+}
+
+.footer-link:hover {
+  text-decoration-thickness: 2px;
 }
 
 /* ---------- REDUCED MOTION ---------- */
@@ -794,7 +860,9 @@ ul {
   }
 
   .story-header {
-    padding: 1.5rem 1.75rem;
+    /* extra right padding reserves room for the absolutely-positioned
+       hamburger button so it doesn't sit on top of the back link */
+    padding: 1.5rem 4.5rem 1.5rem 1.75rem;
     flex-wrap: wrap;
     gap: 0.75rem;
   }
