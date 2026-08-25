@@ -48,23 +48,32 @@
 
     <nav class="corner-menu" aria-label="Primary">
       <!-- On-page sections: add new homepage sections under Home as smooth-scroll links -->
-      <div class="menu-col">
-        <h3>Home</h3>
-        <ul>
+      <div class="menu-col dropdown">
+        <button class="dropdown-toggle" type="button" aria-expanded="false">
+          Home
+          <svg class="chev" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1 L5 5 L9 1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="dropdown-panel">
           <li><a href="#home">Meet Meaghan</a></li>
         </ul>
       </div>
-      <div class="menu-col">
-        <h3>About</h3>
-        <ul>
+      <div class="menu-col dropdown">
+        <button class="dropdown-toggle" type="button" aria-expanded="false">
+          About
+          <svg class="chev" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1 L5 5 L9 1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="dropdown-panel">
           <li><a href="about-meaghan.html">Meaghan's Story</a></li>
           <li><a href="#">Testimonials</a></li>
           <li><a href="#">Documents</a></li>
         </ul>
       </div>
-      <div class="menu-col">
-        <h3>Contact</h3>
-        <ul>
+      <div class="menu-col dropdown">
+        <button class="dropdown-toggle" type="button" aria-expanded="false">
+          Contact
+          <svg class="chev" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1 L5 5 L9 1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="dropdown-panel">
           <li><a href="#">Book a Session</a></li>
           <li><a href="#">Send a Message</a></li>
           <li><a href="#">FAQ</a></li>
@@ -83,11 +92,22 @@
     </div>
 
     <div class="bottom-left">
-      <a href="#book" class="cta-text">Book a<br>Session.</a>
+      <a href="#book" class="book-btn">Book a Session</a>
 
-      <div class="bottom-actions">
-        <a href="#book" class="book-btn">Book a Session</a>
-      </div>
+      <!-- Narrow screens only: the hero guide arrow moves here, into the
+           blank space to the right of the button -->
+      <svg class="guide-arrow guide-arrow-hero-mobile" viewBox="0 0 140 560" fill="none" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+        <path d="M40 16
+                 C96 34 122 92 92 142
+                 C66 186 30 220 52 262
+                 C70 296 116 296 118 260
+                 C120 230 84 218 66 250
+                 C44 290 84 330 90 390
+                 C94 440 80 470 72 512"
+              stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+        <path d="M52 488 L72 518 L95 494"
+              stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
     </div>
 
   </section>

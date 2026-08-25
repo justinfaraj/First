@@ -20,6 +20,32 @@ document.addEventListener('DOMContentLoaded', () => {
     sections.forEach((section) => observer.observe(section));
   }
 
+  // Corner-menu dropdowns
+  const dropdowns = document.querySelectorAll('.corner-menu .dropdown');
+  dropdowns.forEach((dropdown) => {
+    const toggle = dropdown.querySelector('.dropdown-toggle');
+    toggle.addEventListener('click', () => {
+      const wasOpen = dropdown.classList.contains('open');
+      dropdowns.forEach((d) => {
+        d.classList.remove('open');
+        d.querySelector('.dropdown-toggle').setAttribute('aria-expanded', 'false');
+      });
+      if (!wasOpen) {
+        dropdown.classList.add('open');
+        toggle.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.corner-menu .dropdown')) {
+      dropdowns.forEach((d) => {
+        d.classList.remove('open');
+        d.querySelector('.dropdown-toggle').setAttribute('aria-expanded', 'false');
+      });
+    }
+  });
+
   // Hamburger menu (narrow screens)
   const navToggle = document.querySelector('.nav-toggle');
   const mobileMenu = document.querySelector('.mobile-menu');

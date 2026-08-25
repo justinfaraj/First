@@ -168,37 +168,11 @@ ul {
 /* ---------- BOTTOM LEFT: QUOTE + ACTIONS ---------- */
 
 .bottom-left {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 2rem;
-}
-
-.cta-text {
-  font-family: var(--serif);
-  font-weight: 600;
-  font-style: italic;
-  font-size: clamp(1.75rem, 3.2vw, 2.75rem);
-  line-height: 1.05;
-  color: var(--navy);
-  margin: 0;
-  display: inline-block;
-  text-decoration: underline;
-  text-decoration-color: var(--logo-blue);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 6px;
-}
-
-.cta-text:hover {
-  text-decoration-thickness: 2px;
-}
-
-.bottom-actions {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 1.5rem;
-  flex-shrink: 0;
 }
 
 .book-btn {
@@ -240,6 +214,11 @@ ul {
   bottom: -70px;
   width: 156px;
   height: calc(66% + 70px);
+}
+
+/* narrow-screen copy of the hero arrow; shown below 768px only */
+.guide-arrow-hero-mobile {
+  display: none;
 }
 
 /* Variant B: left side of the About section, pointing into the story link */
@@ -311,7 +290,7 @@ ul {
   text-decoration-thickness: 2px;
 }
 
-/* ---------- CORNER MENU ---------- */
+/* ---------- CORNER MENU (dropdowns) ---------- */
 
 .corner-menu {
   display: flex;
@@ -319,58 +298,101 @@ ul {
   margin-bottom: 2rem;
 }
 
-.menu-col h3 {
+.dropdown {
+  position: relative;
+}
+
+.dropdown-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
   font-family: var(--sans);
   font-size: 0.65rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--navy);
-  margin: 0 0 0.9rem;
   font-weight: 600;
   opacity: 0;
   animation: fadeIn 0.7s ease forwards;
 }
 
-.menu-col ul li {
+.corner-menu .dropdown:nth-child(1) .dropdown-toggle { animation-delay: 0.3s; }
+.corner-menu .dropdown:nth-child(2) .dropdown-toggle { animation-delay: 0.4s; }
+.corner-menu .dropdown:nth-child(3) .dropdown-toggle { animation-delay: 0.5s; }
+
+.dropdown-toggle .chev {
+  width: 9px;
+  height: 6px;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.dropdown.open .dropdown-toggle .chev {
+  transform: rotate(180deg);
+}
+
+.dropdown-toggle:focus-visible {
+  outline: 2px solid var(--logo-blue);
+  outline-offset: 3px;
+}
+
+.dropdown-panel {
+  display: none;
+  position: absolute;
+  top: calc(100% + 0.7rem);
+  left: -1rem;
+  min-width: 185px;
+  background: var(--ivory);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 12px 32px rgba(13, 40, 68, 0.16);
+  z-index: 25;
+}
+
+.dropdown.open .dropdown-panel {
+  display: block;
+}
+
+.dropdown-panel li {
   margin-bottom: 0.55rem;
 }
 
-.menu-col ul li a {
+.dropdown-panel li:last-child {
+  margin-bottom: 0;
+}
+
+.dropdown-panel li a {
   font-size: 0.8rem;
   letter-spacing: 0.02em;
   color: var(--navy-soft);
   font-weight: 500;
   white-space: nowrap;
-  opacity: 0;
-  transform: translateY(-6px);
-  animation: fadeInUp 0.6s ease forwards;
   display: inline-block;
   text-decoration: underline;
   text-decoration-color: var(--logo-blue);
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
+  opacity: 0;
 }
 
-.menu-col ul li a:hover {
+.dropdown-panel li a:hover {
   text-decoration-thickness: 2px;
 }
 
-.corner-menu .menu-col:nth-child(1) h3 { animation-delay: 0.3s; }
-.corner-menu .menu-col:nth-child(2) h3 { animation-delay: 0.4s; }
-.corner-menu .menu-col:nth-child(3) h3 { animation-delay: 0.5s; }
+/* dropdown items enter exactly like the page-load text animation */
+.dropdown.open .dropdown-panel li a {
+  animation: fadeInUp 0.6s ease forwards;
+}
 
-.corner-menu .menu-col:nth-child(1) li:nth-child(1) a { animation-delay: 0.4s; }
-.corner-menu .menu-col:nth-child(1) li:nth-child(2) a { animation-delay: 0.46s; }
-.corner-menu .menu-col:nth-child(1) li:nth-child(3) a { animation-delay: 0.52s; }
-.corner-menu .menu-col:nth-child(1) li:nth-child(4) a { animation-delay: 0.58s; }
-
-.corner-menu .menu-col:nth-child(2) li:nth-child(1) a { animation-delay: 0.5s; }
-.corner-menu .menu-col:nth-child(2) li:nth-child(2) a { animation-delay: 0.56s; }
-.corner-menu .menu-col:nth-child(2) li:nth-child(3) a { animation-delay: 0.62s; }
-
-.corner-menu .menu-col:nth-child(3) li:nth-child(1) a { animation-delay: 0.6s; }
-.corner-menu .menu-col:nth-child(3) li:nth-child(2) a { animation-delay: 0.66s; }
-.corner-menu .menu-col:nth-child(3) li:nth-child(3) a { animation-delay: 0.72s; }
+.dropdown.open .dropdown-panel li:nth-child(1) a { animation-delay: 0.05s; }
+.dropdown.open .dropdown-panel li:nth-child(2) a { animation-delay: 0.11s; }
+.dropdown.open .dropdown-panel li:nth-child(3) a { animation-delay: 0.17s; }
+.dropdown.open .dropdown-panel li:nth-child(4) a { animation-delay: 0.23s; }
 
 /* ---------- MOBILE NAV (hamburger, shown below 768px) ---------- */
 
@@ -419,6 +441,8 @@ ul {
   color: var(--navy);
   font-weight: 600;
   margin: 1.1rem 0 0.6rem;
+  opacity: 0;
+  animation: fadeIn 0.7s ease forwards;
 }
 
 .mobile-menu h4:first-child {
@@ -433,15 +457,31 @@ ul {
   font-size: 0.85rem;
   color: var(--navy-soft);
   font-weight: 500;
+  display: inline-block;
   text-decoration: underline;
   text-decoration-color: var(--logo-blue);
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
+  opacity: 0;
+  animation: fadeInUp 0.6s ease forwards;
 }
 
 .mobile-menu ul li a:hover {
   text-decoration-thickness: 2px;
 }
+
+/* opening the hamburger replays the page-load entrance animation */
+.mobile-menu h4:nth-of-type(1) { animation-delay: 0.05s; }
+.mobile-menu h4:nth-of-type(2) { animation-delay: 0.2s; }
+.mobile-menu h4:nth-of-type(3) { animation-delay: 0.35s; }
+
+.mobile-menu ul:nth-of-type(1) li:nth-child(1) a { animation-delay: 0.1s; }
+.mobile-menu ul:nth-of-type(2) li:nth-child(1) a { animation-delay: 0.25s; }
+.mobile-menu ul:nth-of-type(2) li:nth-child(2) a { animation-delay: 0.31s; }
+.mobile-menu ul:nth-of-type(2) li:nth-child(3) a { animation-delay: 0.37s; }
+.mobile-menu ul:nth-of-type(3) li:nth-child(1) a { animation-delay: 0.4s; }
+.mobile-menu ul:nth-of-type(3) li:nth-child(2) a { animation-delay: 0.46s; }
+.mobile-menu ul:nth-of-type(3) li:nth-child(3) a { animation-delay: 0.52s; }
 
 /* ---------- DARK SECTIONS (even sections: navy band) ---------- */
 
@@ -635,8 +675,10 @@ ul {
 .reduced-motion .headline .line,
 .reduced-motion .subheading,
 .reduced-motion .photo-callout,
-.reduced-motion .menu-col h3,
-.reduced-motion .menu-col ul li a {
+.reduced-motion .dropdown-toggle,
+.reduced-motion .dropdown-panel li a,
+.reduced-motion .mobile-menu h4,
+.reduced-motion .mobile-menu ul li a {
   animation: none !important;
   opacity: 1 !important;
   transform: none !important;
@@ -699,14 +741,7 @@ ul {
   }
 
   .bottom-left {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.75rem;
     margin-top: 2.5rem;
-  }
-
-  .bottom-actions {
-    gap: 1.25rem;
   }
 
   .book-btn {
@@ -714,13 +749,19 @@ ul {
     font-size: 0.68rem;
   }
 
+  /* the tall hero arrow would leave a gap under the stacked photo here,
+     so it hides and its copy appears beside the Book a Session button */
   .guide-arrow-hero {
-    position: static;
+    display: none;
+  }
+
+  .guide-arrow-hero-mobile {
     display: block;
-    order: 3;
-    width: 80px;
-    height: 300px;
-    margin: 1rem auto -70px;
+    position: absolute;
+    right: 6%;
+    top: -45px;
+    width: 55px;
+    height: 220px;
   }
 
   .guide-arrow-about,
