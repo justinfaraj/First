@@ -760,6 +760,134 @@ ul {
   }
 }
 
+/* ---------- DOCUMENTS PAGE ---------- */
+
+.documents {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 4rem 2rem 5rem;
+}
+
+.doc-section {
+  margin-top: 3rem;
+}
+
+.doc-section:first-of-type {
+  margin-top: 2rem;
+}
+
+.doc-section-heading {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--navy);
+  margin: 0 0 1.25rem;
+}
+
+.doc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.doc-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+}
+
+.doc-info {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.doc-type {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--ivory);
+  background: var(--navy);
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.doc-title {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--navy);
+  margin: 0;
+}
+
+.doc-actions {
+  display: flex;
+  gap: 1.5rem;
+  flex-shrink: 0;
+}
+
+.doc-action {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--navy);
+  text-decoration: underline;
+  text-decoration-color: var(--logo-blue);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.doc-action:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* empty state: dashed rule + reduced opacity read as "intentionally
+   empty for now", distinct from the populated cards above */
+.doc-empty {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  padding: 1.5rem 1.75rem;
+  border: 1px dashed var(--rule);
+  border-radius: 12px;
+  opacity: 0.85;
+}
+
+.doc-empty-icon {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  color: var(--logo-blue);
+  opacity: 0.55;
+}
+
+.doc-empty p {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--navy-soft);
+}
+
+@media (max-width: 768px) {
+  .documents {
+    padding: 2.5rem 1.25rem 4rem;
+  }
+
+  .doc-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 /* ---------- SITE FOOTER ---------- */
 
 .site-footer {

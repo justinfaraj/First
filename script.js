@@ -14,7 +14,7 @@ const NAV_GROUPS = [
     items: [
       { text: "Meaghan's Story", href: 'about-meaghan.html' },
       { text: 'Testimonials', href: '#' },
-      { text: 'Documents', href: '#' },
+      { text: 'Documents', href: 'documents.html' },
     ],
   },
   {
