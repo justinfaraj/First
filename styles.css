@@ -69,7 +69,8 @@ ul {
 }
 
 .panel-right {
-  background: var(--gray-bg);
+  background: var(--white);
+  overflow: hidden;
 }
 
 /* ---------- VERTICAL LABEL ---------- */
@@ -231,34 +232,21 @@ ul {
 
 /* ---------- RIGHT PANEL: PHOTO ---------- */
 
-.photo-placeholder {
+.meaghan-photo {
   position: absolute;
   inset: 0;
-  background: var(--gray-bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.photo-placeholder span {
-  font-family: var(--sans);
-  font-size: 0.85rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #6b6b6b;
-  padding: 0 2rem;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 0%;
 }
 
 /* ---------- CORNER MENU ---------- */
 
 .corner-menu {
-  position: absolute;
-  top: 3rem;
-  right: 3rem;
   display: flex;
-  gap: 3rem;
-  z-index: 2;
+  gap: 2.5rem;
+  margin-bottom: 2rem;
 }
 
 .menu-col h3 {
@@ -313,10 +301,16 @@ ul {
 
 /* ---------- BOOK BUTTON ---------- */
 
+.bottom-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1.5rem;
+  flex-shrink: 0;
+}
+
 .book-btn {
-  position: absolute;
-  bottom: 3rem;
-  right: 3rem;
+  display: inline-block;
   background: var(--black);
   color: var(--white);
   padding: 1.1rem 2.2rem;
@@ -327,7 +321,7 @@ ul {
   text-transform: uppercase;
   border: 2px solid var(--black);
   transition: background 0.25s ease, color 0.25s ease, transform 0.2s ease;
-  z-index: 2;
+  white-space: nowrap;
 }
 
 .book-btn:hover {
@@ -415,11 +409,13 @@ ul {
   }
 
   .corner-menu {
-    top: 1.5rem;
-    right: 1.25rem;
-    left: 1.25rem;
-    justify-content: space-between;
-    gap: 1rem;
+    flex-wrap: wrap;
+    gap: 1.25rem 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .menu-col {
+    min-width: 45%;
   }
 
   .menu-col h3 {
@@ -436,14 +432,22 @@ ul {
   }
 
   .book-btn {
-    bottom: 1.5rem;
-    right: 1.25rem;
     padding: 0.85rem 1.5rem;
     font-size: 0.68rem;
   }
 
   .bottom-left {
     order: 3;
+  }
+
+  .bottom-actions {
+    flex-direction: row;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .scroll-indicator {
+    order: 2;
   }
 }
 
@@ -455,14 +459,6 @@ ul {
 }
 
 @media (max-width: 560px) {
-  .corner-menu {
-    flex-wrap: wrap;
-  }
-
-  .menu-col {
-    min-width: 45%;
-  }
-
   .panel-left {
     padding-left: 2.75rem;
   }
@@ -481,23 +477,21 @@ ul {
 }
 
 .about-photo {
+  position: relative;
   width: 42%;
   flex-shrink: 0;
   background: var(--gray-bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  overflow: hidden;
   min-height: 480px;
 }
 
-.about-photo span {
-  font-family: var(--sans);
-  font-size: 0.85rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #6b6b6b;
-  padding: 0 2rem;
+.about-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 0%;
 }
 
 .about-content {
