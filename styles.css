@@ -211,13 +211,15 @@ ul {
 .guide-arrow-hero {
   position: absolute;
   right: 2.2%;
+  /* anchored a fixed distance below the callout (not a % of container
+     height) so the gap can't shrink to nothing on short viewports */
+  top: calc(26% + 90px);
   bottom: -70px;
   width: 156px;
-  height: calc(66% + 70px);
 }
 
-/* narrow-screen copy of the hero arrow; shown below 768px only */
-.guide-arrow-hero-mobile {
+/* compact callout-to-photo curl; shown only below 768px, see media query */
+.guide-arrow-callout-mobile {
   display: none;
 }
 
@@ -228,6 +230,15 @@ ul {
   bottom: 9rem;
   width: 130px;
   height: 295px;
+}
+
+/* the centered about-content column grows to fill more of the width as
+   the viewport narrows, so left:16% starts running into its text below
+   this point — hide rather than let them overlap */
+@media (max-width: 1400px) {
+  .guide-arrow-about {
+    display: none;
+  }
 }
 
 /* Variant D: right margin of the story page, header into the story */
@@ -720,7 +731,7 @@ ul {
 
   .photo-callout {
     position: static;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.25rem;
     font-size: 1.2rem;
   }
 
@@ -750,18 +761,17 @@ ul {
   }
 
   /* the tall hero arrow would leave a gap under the stacked photo here,
-     so it hides and its copy appears beside the Book a Session button */
+     so it hides and a compact curl runs from the callout into the photo
+     instead (in-flow, so it can never leave a gap of its own) */
   .guide-arrow-hero {
     display: none;
   }
 
-  .guide-arrow-hero-mobile {
+  .guide-arrow-callout-mobile {
     display: block;
-    position: absolute;
-    right: 6%;
-    top: -45px;
-    width: 55px;
-    height: 220px;
+    width: 64px;
+    height: 90px;
+    margin: 0 auto -0.5rem;
   }
 
   .guide-arrow-about,
