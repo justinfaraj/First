@@ -49,6 +49,7 @@ ul {
 /* ---------- SECTION 1: HERO ---------- */
 
 .page {
+  position: relative;
   display: flex;
   width: 100%;
   height: 100vh;
@@ -173,7 +174,7 @@ ul {
   gap: 2rem;
 }
 
-.pull-quote {
+.cta-text {
   font-family: var(--serif);
   font-weight: 600;
   font-style: italic;
@@ -181,6 +182,15 @@ ul {
   line-height: 1.05;
   color: var(--navy);
   margin: 0;
+  display: inline-block;
+  text-decoration: underline;
+  text-decoration-color: var(--logo-blue);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+}
+
+.cta-text:hover {
+  text-decoration-thickness: 2px;
 }
 
 .bottom-actions {
@@ -196,7 +206,7 @@ ul {
   background: var(--navy);
   color: var(--ivory);
   padding: 1.1rem 2.2rem;
-  border-radius: 999px;
+  border-radius: 10px;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.18em;
@@ -213,51 +223,37 @@ ul {
   transform: translateY(-2px);
 }
 
-.scroll-indicator {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  flex-shrink: 0;
-  cursor: pointer;
+/* ---------- BRAND GUIDE ARROWS ---------- */
+
+/* The swirly hand-drawn arrow that guides readers from one section into
+   the next — part of the brand identity, always --logo-blue */
+
+.guide-arrow {
+  color: var(--logo-blue);
+  pointer-events: none;
+  z-index: 5;
 }
 
-.dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--logo-blue);
+.guide-arrow-hero {
+  position: absolute;
+  right: 2.2%;
+  bottom: -70px;
+  width: 156px;
+  height: calc(66% + 70px);
 }
 
-.dot:first-child {
-  background: var(--navy);
+.section-arrow {
+  position: relative;
+  height: 0;
+  z-index: 5;
 }
 
-.arrows {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  margin-top: 0.35rem;
-}
-
-.arrow {
-  width: 9px;
-  height: 9px;
-  border-right: 2px solid var(--logo-blue);
-  border-bottom: 2px solid var(--logo-blue);
-  transform: rotate(45deg);
-  opacity: 0.85;
-  animation: bob 1.6s ease-in-out infinite;
-}
-
-.arrow:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-@keyframes bob {
-  0%, 100% { transform: rotate(45deg) translate(0, 0); opacity: 0.4; }
-  50% { transform: rotate(45deg) translate(3px, 3px); opacity: 1; }
+.section-arrow .guide-arrow {
+  position: absolute;
+  right: 5%;
+  top: -130px;
+  height: 260px;
+  width: 90px;
 }
 
 /* ---------- RIGHT PANEL: PHOTO + CALLOUT ---------- */
@@ -404,6 +400,10 @@ ul {
   color: var(--navy);
   font-weight: 600;
   margin: 1.1rem 0 0.6rem;
+}
+
+.mobile-menu h4:first-child {
+  margin-top: 0;
 }
 
 .mobile-menu ul li {
@@ -621,11 +621,6 @@ ul {
   transform: none !important;
 }
 
-.reduced-motion .arrow {
-  animation: none !important;
-  opacity: 0.7 !important;
-}
-
 /* ---------- RESPONSIVE: BELOW 768px ---------- */
 
 @media (max-width: 768px) {
@@ -698,25 +693,20 @@ ul {
     font-size: 0.68rem;
   }
 
-  .arrows {
-    flex-direction: row;
-    margin-top: 0;
-    margin-left: 0.35rem;
+  .guide-arrow-hero {
+    position: static;
+    display: block;
+    order: 3;
+    width: 80px;
+    height: 300px;
+    margin: 1rem auto -70px;
   }
 
-  .scroll-indicator {
-    flex-direction: row;
-  }
-
-  .arrow {
-    transform: rotate(-45deg);
-  }
-
-  .arrow:nth-child(2) { animation-delay: 0.2s; }
-
-  @keyframes bob {
-    0%, 100% { transform: rotate(-45deg) translate(0, 0); opacity: 0.4; }
-    50% { transform: rotate(-45deg) translate(3px, -3px); opacity: 1; }
+  .section-arrow .guide-arrow {
+    right: 8%;
+    top: -100px;
+    height: 200px;
+    width: 70px;
   }
 
   .about {
