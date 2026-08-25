@@ -29,10 +29,14 @@ const NAV_GROUPS = [
 
 // A "section" link scrolls within the current page if that section
 // exists here, otherwise it navigates to the homepage and scrolls there.
+// window.SITE_HOME_PAGE lets a page override the homepage URL (e.g. a
+// hosted preview where "index.html" isn't a real sibling file); it
+// defaults to the normal relative link used on the live site.
 function resolveHref(item) {
   if (item.href) return item.href;
   const onThisPage = document.getElementById(item.section);
-  return onThisPage ? `#${item.section}` : `index.html#${item.section}`;
+  const homePage = window.SITE_HOME_PAGE || 'index.html';
+  return onThisPage ? `#${item.section}` : `${homePage}#${item.section}`;
 }
 
 function renderNav() {
