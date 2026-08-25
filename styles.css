@@ -713,12 +713,13 @@ ul {
 }
 
 .policy-card {
-  margin: 2.25rem 0 2.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 2rem 0 0;
   padding: 1.5rem 1.75rem;
   border: 1px solid var(--rule);
   border-left: 3px solid var(--logo-blue);
   border-radius: 12px;
-  max-width: 46rem;
 }
 
 .policy-heading {
