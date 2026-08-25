@@ -12,21 +12,44 @@
 </head>
 <body>
 
-<div class="page">
+<span class="vertical-label" id="section-label" aria-hidden="true">Home</span>
+
+<!-- SECTION 1: HERO -->
+<div class="page" id="home" data-label="Home">
 
   <!-- LEFT PANEL -->
   <section class="panel panel-left">
 
-    <span class="vertical-label">Executive Coach</span>
+    <div class="mobile-nav">
+      <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <nav class="mobile-menu" id="mobile-menu" hidden>
+        <ul>
+          <li><a href="#home">Home</a></li>
+        </ul>
+        <h4>About</h4>
+        <ul>
+          <li><a href="about-meaghan.html">About Meaghan</a></li>
+          <li><a href="#">Testimonials</a></li>
+          <li><a href="#">Documents</a></li>
+        </ul>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="#">Book a Session</a></li>
+          <li><a href="#">Send a Message</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </nav>
+    </div>
 
     <nav class="corner-menu" aria-label="Primary">
+      <!-- On-page sections: add new homepage sections to this list as smooth-scroll links -->
       <div class="menu-col">
-        <h3>Coaching</h3>
         <ul>
-          <li><a href="#">Mindset Coaching</a></li>
-          <li><a href="#">Leadership Coaching</a></li>
-          <li><a href="#">Business Coaching</a></li>
-          <li><a href="#">Career Coaching</a></li>
+          <li><a href="#home">Home</a></li>
         </ul>
       </div>
       <div class="menu-col">
@@ -48,8 +71,6 @@
     </nav>
 
     <div class="left-content">
-      <p class="eyebrow">Eagle Point Coaching</p>
-
       <h1 class="headline">
         <span class="line"><span class="script-letter">E</span>AGLE</span>
         <span class="line">POINT</span>
@@ -81,14 +102,15 @@
 
   <!-- RIGHT PANEL -->
   <section class="panel panel-right">
+    <a href="#about-meaghan" class="photo-callout">Meet Your Coach,<br>Meaghan Janedis</a>
     <img class="meaghan-photo" src="images/meaghan-janedis.png" alt="Meaghan Janedis, executive coach">
   </section>
 
 </div>
 
-<section class="about" id="about-meaghan">
+<!-- SECTION 2: ABOUT (even section: navy band) -->
+<section class="about section-dark" id="about-meaghan" data-label="About">
   <div class="about-content">
-    <p class="eyebrow">About</p>
     <h2 class="about-heading">Meet Meaghan Janedis</h2>
     <p class="about-text">
       Meaghan is a seasoned startup CEO with a long history of helping people

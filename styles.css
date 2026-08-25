@@ -20,7 +20,6 @@ html {
 html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -47,18 +46,19 @@ ul {
   padding: 0;
 }
 
-/* ---------- LAYOUT ---------- */
+/* ---------- SECTION 1: HERO ---------- */
 
 .page {
   display: flex;
-  min-height: 100vh;
   width: 100%;
+  height: 100vh;
+  height: 100svh;
 }
 
 .panel {
   position: relative;
   width: 50%;
-  min-height: 100vh;
+  height: 100%;
 }
 
 .panel-left {
@@ -77,10 +77,10 @@ ul {
   justify-content: center;
 }
 
-/* ---------- VERTICAL LABEL ---------- */
+/* ---------- VERTICAL SECTION LABEL ---------- */
 
 .vertical-label {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 1.25rem;
   transform: translateY(-50%) rotate(180deg);
@@ -90,25 +90,16 @@ ul {
   font-size: 0.7rem;
   font-weight: 500;
   color: var(--navy-soft);
+  z-index: 40;
+  transition: color 0.3s ease;
+  pointer-events: none;
+}
+
+.vertical-label.on-dark {
+  color: var(--ivory);
 }
 
 /* ---------- HEADLINE ---------- */
-
-.left-content {
-  margin-top: 0;
-}
-
-.eyebrow {
-  text-transform: uppercase;
-  letter-spacing: 0.35em;
-  font-size: 0.7rem;
-  color: var(--navy-soft);
-  font-weight: 600;
-  margin: 0 0 1.25rem;
-  opacity: 0;
-  animation: fadeInUp 0.8s ease forwards;
-  animation-delay: 0.1s;
-}
 
 .headline {
   font-family: var(--serif);
@@ -140,6 +131,9 @@ ul {
   font-size: 1.35em;
   padding: 0 0.02em;
   vertical-align: -0.08em;
+  /* keep the oversized script glyph from inflating its line box,
+     so the three headline lines sit at equal vertical rhythm */
+  line-height: 0;
 }
 
 .subheading {
@@ -170,11 +164,11 @@ ul {
   to { opacity: 1; }
 }
 
-/* ---------- BOTTOM LEFT: QUOTE + SCROLL ---------- */
+/* ---------- BOTTOM LEFT: QUOTE + ACTIONS ---------- */
 
 .bottom-left {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   gap: 2rem;
 }
@@ -189,12 +183,43 @@ ul {
   margin: 0;
 }
 
+.bottom-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.5rem;
+  flex-shrink: 0;
+}
+
+.book-btn {
+  display: inline-block;
+  background: var(--navy);
+  color: var(--ivory);
+  padding: 1.1rem 2.2rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: 2px solid var(--navy);
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+  white-space: nowrap;
+}
+
+.book-btn:hover {
+  background: var(--logo-blue);
+  border-color: var(--logo-blue);
+  color: var(--navy);
+  transform: translateY(-2px);
+}
+
 .scroll-indicator {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
   flex-shrink: 0;
+  cursor: pointer;
 }
 
 .dot {
@@ -235,14 +260,40 @@ ul {
   50% { transform: rotate(45deg) translate(3px, 3px); opacity: 1; }
 }
 
-/* ---------- RIGHT PANEL: PHOTO ---------- */
+/* ---------- RIGHT PANEL: PHOTO + CALLOUT ---------- */
 
 .meaghan-photo {
   height: 90vh;
+  height: 90svh;
   width: auto;
   max-width: 94%;
   object-fit: contain;
   object-position: bottom center;
+}
+
+.photo-callout {
+  position: absolute;
+  top: 26%;
+  right: 4%;
+  z-index: 2;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.35rem;
+  line-height: 1.3;
+  color: var(--navy);
+  text-align: center;
+  text-decoration: underline;
+  text-decoration-color: var(--logo-blue);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  opacity: 0;
+  animation: fadeIn 0.9s ease forwards;
+  animation-delay: 1s;
+}
+
+.photo-callout:hover {
+  text-decoration-thickness: 2px;
 }
 
 /* ---------- CORNER MENU ---------- */
@@ -306,191 +357,110 @@ ul {
 .corner-menu .menu-col:nth-child(3) li:nth-child(2) a { animation-delay: 0.66s; }
 .corner-menu .menu-col:nth-child(3) li:nth-child(3) a { animation-delay: 0.72s; }
 
-/* ---------- BOOK BUTTON ---------- */
+/* ---------- MOBILE NAV (hamburger, shown below 768px) ---------- */
 
-.bottom-actions {
+.mobile-nav {
+  display: none;
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 30;
+}
+
+.nav-toggle {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  gap: 1.5rem;
-  flex-shrink: 0;
+  gap: 4px;
+  background: var(--ivory);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 11px 10px;
+  cursor: pointer;
 }
 
-.book-btn {
-  display: inline-block;
+.nav-toggle .bar {
+  width: 20px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--navy);
+}
+
+.mobile-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  min-width: 230px;
+  background: var(--ivory);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 12px 32px rgba(13, 40, 68, 0.18);
+}
+
+.mobile-menu h4 {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--navy);
+  font-weight: 600;
+  margin: 1.1rem 0 0.6rem;
+}
+
+.mobile-menu ul li {
+  margin-bottom: 0.5rem;
+}
+
+.mobile-menu ul li a {
+  font-size: 0.85rem;
+  color: var(--navy-soft);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: var(--logo-blue);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.mobile-menu ul li a:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* ---------- DARK SECTIONS (even sections: navy band) ---------- */
+
+.section-dark {
   background: var(--navy);
   color: var(--ivory);
-  padding: 1.1rem 2.2rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  border: 2px solid var(--navy);
-  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
-  white-space: nowrap;
 }
 
-.book-btn:hover {
-  background: var(--logo-blue);
-  border-color: var(--logo-blue);
-  color: var(--navy);
-  transform: translateY(-2px);
+.section-dark .about-heading,
+.section-dark .about-text,
+.section-dark .about-credentials li {
+  color: var(--ivory);
 }
 
-/* ---------- REDUCED MOTION ---------- */
-
-.reduced-motion .eyebrow,
-.reduced-motion .headline .line,
-.reduced-motion .subheading,
-.reduced-motion .menu-col h3,
-.reduced-motion .menu-col ul li a {
-  animation: none !important;
-  opacity: 1 !important;
-  transform: none !important;
+.section-dark .about-credentials {
+  border-top-color: var(--logo-blue);
 }
 
-.reduced-motion .arrow {
-  animation: none !important;
-  opacity: 0.7 !important;
+.section-dark .about-link {
+  color: var(--ivory);
 }
 
-/* ---------- RESPONSIVE ---------- */
-
-@media (max-width: 900px) {
-  .page {
-    flex-direction: column;
-  }
-
-  .panel {
-    width: 100%;
-  }
-
-  .panel-left {
-    padding: 5rem 1.75rem 2.5rem 3.5rem;
-    order: 2;
-  }
-
-  .panel-right {
-    order: 1;
-    height: 62vh;
-    min-height: 460px;
-    overflow: hidden;
-  }
-
-  .meaghan-photo {
-    height: 92%;
-  }
-
-  .vertical-label {
-    left: 0.75rem;
-    font-size: 0.6rem;
-  }
-
-  .headline {
-    font-size: clamp(2.25rem, 9vw, 3.5rem);
-  }
-
-  .bottom-left {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.75rem;
-    margin-top: 2.5rem;
-  }
-
-  .scroll-indicator {
-    flex-direction: row;
-  }
-
-  .arrows {
-    flex-direction: row;
-    margin-top: 0;
-    margin-left: 0.35rem;
-  }
-
-  .arrow {
-    transform: rotate(-45deg);
-  }
-
-  .arrow:nth-child(2) { animation-delay: 0.2s; }
-
-  @keyframes bob {
-    0%, 100% { transform: rotate(-45deg) translate(0, 0); opacity: 0.4; }
-    50% { transform: rotate(-45deg) translate(3px, -3px); opacity: 1; }
-  }
-
-  .corner-menu {
-    flex-wrap: wrap;
-    gap: 1.25rem 1rem;
-    margin-bottom: 2.5rem;
-  }
-
-  .menu-col {
-    min-width: 45%;
-  }
-
-  .menu-col h3 {
-    font-size: 0.6rem;
-    margin-bottom: 0.6rem;
-  }
-
-  .menu-col ul li a {
-    font-size: 0.72rem;
-  }
-
-  .menu-col ul li {
-    margin-bottom: 0.4rem;
-  }
-
-  .book-btn {
-    padding: 0.85rem 1.5rem;
-    font-size: 0.68rem;
-  }
-
-  .bottom-left {
-    order: 3;
-  }
-
-  .bottom-actions {
-    flex-direction: row;
-    align-items: center;
-    gap: 1.25rem;
-  }
-
-  .scroll-indicator {
-    order: 2;
-  }
-
-  .panel-left {
-    display: flex;
-    flex-direction: column;
-  }
-}
-
-@media (max-width: 560px) {
-  .panel-left {
-    padding-left: 2.75rem;
-  }
-
-  .vertical-label {
-    display: none;
-  }
-}
-
-/* ---------- ABOUT MEAGHAN ---------- */
+/* ---------- SECTION 2: ABOUT ---------- */
 
 .about {
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 100%;
-  border-top: 1px solid var(--rule);
+  min-height: 100vh;
+  min-height: 100svh;
 }
 
 .about-content {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  padding: 6rem 2rem 7rem;
+  padding: 5rem 2rem;
   max-width: 46rem;
 }
 
@@ -556,12 +526,6 @@ ul {
   text-decoration-thickness: 2px;
 }
 
-@media (max-width: 900px) {
-  .about-content {
-    padding: 3.5rem 1.75rem 4.5rem;
-  }
-}
-
 /* ---------- FULL STORY PAGE ---------- */
 
 .story-header {
@@ -608,8 +572,12 @@ ul {
 }
 
 .story .eyebrow {
-  animation: none;
-  opacity: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  font-size: 0.7rem;
+  color: var(--navy-soft);
+  font-weight: 600;
+  margin: 0 0 1.25rem;
 }
 
 .story-heading {
@@ -641,7 +609,124 @@ ul {
   border-top: 1px solid var(--rule);
 }
 
-@media (max-width: 560px) {
+/* ---------- REDUCED MOTION ---------- */
+
+.reduced-motion .headline .line,
+.reduced-motion .subheading,
+.reduced-motion .photo-callout,
+.reduced-motion .menu-col h3,
+.reduced-motion .menu-col ul li a {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.reduced-motion .arrow {
+  animation: none !important;
+  opacity: 0.7 !important;
+}
+
+/* ---------- RESPONSIVE: BELOW 768px ---------- */
+
+@media (max-width: 768px) {
+  /* sections switch from fixed full-screen height to natural flow */
+  .page {
+    flex-direction: column;
+    height: auto;
+    min-height: 0;
+  }
+
+  .panel {
+    width: 100%;
+    height: auto;
+  }
+
+  /* photo stacks below the branding/text */
+  .panel-left {
+    order: 1;
+    padding: 4.5rem 1.75rem 2.5rem;
+  }
+
+  .panel-right {
+    order: 2;
+    padding: 2.5rem 0 0;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .meaghan-photo {
+    height: auto;
+    width: 72%;
+    max-width: 360px;
+  }
+
+  .photo-callout {
+    position: static;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+  }
+
+  .vertical-label {
+    display: none;
+  }
+
+  .headline {
+    font-size: clamp(2.25rem, 10vw, 3.5rem);
+  }
+
+  .corner-menu {
+    display: none;
+  }
+
+  .mobile-nav {
+    display: block;
+  }
+
+  .bottom-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.75rem;
+    margin-top: 2.5rem;
+  }
+
+  .bottom-actions {
+    gap: 1.25rem;
+  }
+
+  .book-btn {
+    padding: 0.85rem 1.5rem;
+    font-size: 0.68rem;
+  }
+
+  .arrows {
+    flex-direction: row;
+    margin-top: 0;
+    margin-left: 0.35rem;
+  }
+
+  .scroll-indicator {
+    flex-direction: row;
+  }
+
+  .arrow {
+    transform: rotate(-45deg);
+  }
+
+  .arrow:nth-child(2) { animation-delay: 0.2s; }
+
+  @keyframes bob {
+    0%, 100% { transform: rotate(-45deg) translate(0, 0); opacity: 0.4; }
+    50% { transform: rotate(-45deg) translate(3px, -3px); opacity: 1; }
+  }
+
+  .about {
+    min-height: 0;
+  }
+
+  .about-content {
+    padding: 3.5rem 1.75rem 4.5rem;
+  }
+
   .story-header {
     padding: 1.5rem 1.75rem;
     flex-wrap: wrap;

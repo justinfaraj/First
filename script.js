@@ -10,6 +10,49 @@ document.addEventListener('DOMContentLoaded', () => {
     scrollIndicator.addEventListener('click', () => {
       window.scrollBy({ top: window.innerHeight * 0.8, behavior: 'smooth' });
     });
-    scrollIndicator.style.cursor = 'pointer';
+  }
+
+  // Vertical edge label tracks whichever section is currently in view
+  const sectionLabel = document.getElementById('section-label');
+  const sections = document.querySelectorAll('[data-label]');
+  if (sectionLabel && sections.length && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          sectionLabel.textContent = entry.target.dataset.label;
+          sectionLabel.classList.toggle('on-dark', entry.target.classList.contains('section-dark'));
+        }
+      });
+    }, { rootMargin: '-45% 0px -45% 0px' });
+    sections.forEach((section) => observer.observe(section));
+  }
+
+  // Hamburger menu (narrow screens)
+  const navToggle = document.querySelector('.nav-toggle');
+  const mobileMenu = document.querySelector('.mobile-menu');
+  if (navToggle && mobileMenu) {
+    navToggle.addEventListener('click', () => {
+      const isOpen = !mobileMenu.hasAttribute('hidden');
+      if (isOpen) {
+        mobileMenu.setAttribute('hidden', '');
+      } else {
+        mobileMenu.removeAttribute('hidden');
+      }
+      navToggle.setAttribute('aria-expanded', String(!isOpen));
+    });
+
+    mobileMenu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        mobileMenu.setAttribute('hidden', '');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!mobileMenu.hasAttribute('hidden') && !e.target.closest('.mobile-nav')) {
+        mobileMenu.setAttribute('hidden', '');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
   }
 });
