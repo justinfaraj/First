@@ -697,6 +697,64 @@ ul {
   border-top: 1px solid var(--rule);
 }
 
+/* ---------- BOOKING PAGE ---------- */
+
+.booking {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 4rem 2rem 5rem;
+}
+
+.booking-intro {
+  margin: -1.5rem 0 0;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--navy);
+}
+
+.policy-card {
+  margin: 2.25rem 0 2.5rem;
+  padding: 1.5rem 1.75rem;
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--logo-blue);
+  border-radius: 12px;
+  max-width: 46rem;
+}
+
+.policy-heading {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--navy);
+  font-weight: 600;
+  margin: 0 0 0.75rem;
+}
+
+.policy-card p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--navy-soft);
+}
+
+.calendly-inline-widget {
+  width: 100%;
+  height: 760px;
+  min-height: 700px;
+}
+
+@media (max-width: 768px) {
+  .booking {
+    padding: 2.5rem 1.25rem 4rem;
+  }
+
+  .calendly-inline-widget {
+    height: 1050px;
+    min-height: 900px;
+  }
+}
+
 /* ---------- SITE FOOTER ---------- */
 
 .site-footer {

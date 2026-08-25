@@ -20,7 +20,7 @@ const NAV_GROUPS = [
   {
     label: 'Contact',
     items: [
-      { text: 'Book a Session', href: '#' },
+      { text: 'Book a Session', href: 'book-a-session.html' },
       { text: 'Send a Message', href: '#' },
       { text: 'FAQ', href: '#' },
     ],
