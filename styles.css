@@ -344,6 +344,10 @@ ul {
 .corner-menu .dropdown:nth-child(2) .dropdown-toggle { animation-delay: 0.4s; }
 .corner-menu .dropdown:nth-child(3) .dropdown-toggle { animation-delay: 0.5s; }
 
+/* the plain "Book a Session" link (4th menu-col, not a dropdown) reuses
+   .dropdown-toggle for identical typography, minus the panel/chevron */
+.corner-menu .menu-col:nth-child(4) .dropdown-toggle { animation-delay: 0.6s; }
+
 .dropdown-toggle .chev {
   width: 9px;
   height: 6px;
@@ -420,7 +424,7 @@ ul {
   display: none;
   position: absolute;
   top: 1.25rem;
-  right: 1.25rem;
+  left: 1.25rem;
   z-index: 30;
 }
 
@@ -445,7 +449,7 @@ ul {
 .mobile-menu {
   position: absolute;
   top: calc(100% + 0.5rem);
-  right: 0;
+  left: 0;
   min-width: 230px;
   background: var(--ivory);
   border: 1px solid var(--rule);
@@ -501,7 +505,20 @@ ul {
 .mobile-menu ul:nth-of-type(2) li:nth-child(3) a { animation-delay: 0.37s; }
 .mobile-menu ul:nth-of-type(3) li:nth-child(1) a { animation-delay: 0.4s; }
 .mobile-menu ul:nth-of-type(3) li:nth-child(2) a { animation-delay: 0.46s; }
-.mobile-menu ul:nth-of-type(3) li:nth-child(3) a { animation-delay: 0.52s; }
+
+/* the plain "Book a Session" link, after the Contact group */
+.mobile-menu-link {
+  display: block;
+  margin-top: 1.1rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--navy);
+  font-weight: 600;
+  opacity: 0;
+  animation: fadeIn 0.7s ease forwards;
+  animation-delay: 0.52s;
+}
 
 /* ---------- DARK SECTIONS (even sections: navy band) ---------- */
 
@@ -612,19 +629,21 @@ ul {
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 2rem;
   padding: 2.25rem 3rem;
   border-bottom: 1px solid var(--rule);
 }
 
 /* the corner-menu's margin-bottom is for hero spacing; inside the story
-   header it should just sit centered with its siblings */
+   header it should just sit centered with its siblings, on the left */
 .story-header .corner-menu {
   margin-bottom: 0;
 }
 
+/* the logo always sits on the right, whatever else is (or isn't)
+   participating in this row's flex layout */
 .story-wordmark {
+  margin-left: auto;
   font-family: var(--serif);
   font-weight: 800;
   font-size: 1.05rem;
@@ -635,21 +654,6 @@ ul {
 
 .story-wordmark .script-letter {
   font-size: 1.4em;
-}
-
-.story-back {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--navy-soft);
-  text-decoration: underline;
-  text-decoration-color: var(--logo-blue);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-  white-space: nowrap;
-}
-
-.story-back:hover {
-  text-decoration-thickness: 2px;
 }
 
 .story {
@@ -814,7 +818,8 @@ ul {
 .reduced-motion .dropdown-toggle,
 .reduced-motion .dropdown-panel li a,
 .reduced-motion .mobile-menu h4,
-.reduced-motion .mobile-menu ul li a {
+.reduced-motion .mobile-menu ul li a,
+.reduced-motion .mobile-menu-link {
   animation: none !important;
   opacity: 1 !important;
   transform: none !important;
@@ -919,11 +924,9 @@ ul {
   }
 
   .story-header {
-    /* extra right padding reserves room for the absolutely-positioned
-       hamburger button so it doesn't sit on top of the back link */
-    padding: 1.5rem 4.5rem 1.5rem 1.75rem;
-    flex-wrap: wrap;
-    gap: 0.75rem;
+    /* extra left padding reserves room for the absolutely-positioned
+       hamburger button so it doesn't sit under the logo */
+    padding: 1.5rem 1.75rem 1.5rem 4.5rem;
   }
 
   .story {

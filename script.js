@@ -20,11 +20,16 @@ const NAV_GROUPS = [
   {
     label: 'Contact',
     items: [
-      { text: 'Book a Session', href: 'book-a-session.html' },
       { text: 'Send a Message', href: '#' },
       { text: 'FAQ', href: '#' },
     ],
   },
+];
+
+// A plain top-level link alongside the Home/About/Contact dropdowns —
+// not a dropdown itself, just navigates straight to the booking page.
+const NAV_LINKS = [
+  { text: 'Book a Session', href: 'book-a-session.html' },
 ];
 
 // A "section" link scrolls within the current page if that section
@@ -52,11 +57,21 @@ function renderNav() {
     </div>
   `).join('');
 
+  const plainLinks = NAV_LINKS.map((item) => `
+    <div class="menu-col">
+      <a class="dropdown-toggle nav-plain-link" href="${resolveHref(item)}">${item.text}</a>
+    </div>
+  `).join('');
+
   const mobileGroups = NAV_GROUPS.map((group) => `
     <h4>${group.label}</h4>
     <ul>
       ${group.items.map((item) => `<li><a href="${resolveHref(item)}">${item.text}</a></li>`).join('')}
     </ul>
+  `).join('');
+
+  const mobileLinks = NAV_LINKS.map((item) => `
+    <a class="mobile-menu-link" href="${resolveHref(item)}">${item.text}</a>
   `).join('');
 
   return `
@@ -68,11 +83,13 @@ function renderNav() {
       </button>
       <nav class="mobile-menu" id="mobile-menu" hidden>
         ${mobileGroups}
+        ${mobileLinks}
       </nav>
     </div>
 
     <nav class="corner-menu" aria-label="Primary">
       ${dropdowns}
+      ${plainLinks}
     </nav>
   `;
 }
