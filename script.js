@@ -252,4 +252,58 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // ---------- THE HEADER ROW NEVER WRAPS ----------
+  // The menu items hold their natural width, so a header with too little
+  // room overflows measurably instead of breaking onto a second line.
+  // That overflow is the signal to swap in the hamburger. It's measured
+  // rather than guessed at a breakpoint because the menu has different
+  // room on the homepage's half-width panel than in a subpage header.
+  const cornerMenu = document.querySelector('.corner-menu');
+
+  const fitNav = () => {
+    if (!cornerMenu) return;
+
+    // Measure expanded: the question is whether the full menu *would*
+    // fit, which can't be read while it's display:none. Removing the
+    // class and reading scrollWidth forces that layout synchronously,
+    // and the class is restored before the browser paints.
+    document.body.classList.remove('nav-collapsed');
+    // clientWidth 0 means the narrow-screen media query is already hiding
+    // the menu; agree with it rather than reporting a bogus "it fits"
+    const overflows = cornerMenu.clientWidth === 0
+      || cornerMenu.scrollWidth > cornerMenu.clientWidth + 1;
+    document.body.classList.toggle('nav-collapsed', overflows);
+
+    // going back to the full menu leaves no hamburger to close
+    if (!overflows && mobileMenu && !mobileMenu.hasAttribute('hidden')) {
+      mobileMenu.setAttribute('hidden', '');
+      if (navToggle) navToggle.setAttribute('aria-expanded', 'false');
+    }
+  };
+
+  let fitPending = false;
+  let lastWidth = -1;
+  const scheduleFitNav = () => {
+    // only width can change the answer; ignoring height keeps the
+    // ResizeObserver from re-firing on the reflow fitNav itself causes
+    const width = document.documentElement.clientWidth;
+    if (width === lastWidth || fitPending) return;
+    lastWidth = width;
+    fitPending = true;
+    requestAnimationFrame(() => {
+      fitPending = false;
+      fitNav();
+    });
+  };
+
+  window.addEventListener('resize', scheduleFitNav);
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(scheduleFitNav).observe(document.documentElement);
+  }
+  // webfonts land after first paint and change every label's width
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(fitNav);
+  }
+  fitNav();
 });

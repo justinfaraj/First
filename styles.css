@@ -273,30 +273,6 @@ ul {
   }
 }
 
-/* Variant D: right margin of the story page, header into the story */
-.guide-arrow-story-top {
-  position: absolute;
-  top: 0.5rem;
-  right: -12rem;
-  width: 120px;
-  height: 344px;
-}
-
-/* Variant C: short flick from the story into the booking CTA */
-.guide-arrow-story-cta {
-  display: block;
-  width: 84px;
-  height: 154px;
-  margin: 2.5rem 0 -2rem 0.75rem;
-}
-
-/* not enough right margin for the corkscrew on mid-size screens */
-@media (max-width: 1150px) {
-  .guide-arrow-story-top {
-    display: none;
-  }
-}
-
 /* ---------- RIGHT PANEL: PHOTO + CALLOUT ---------- */
 
 .meaghan-photo {
@@ -350,6 +326,14 @@ ul {
   margin-bottom: 2rem;
 }
 
+/* Never wrap. Items hold their natural width instead of compressing, so a
+   header too narrow for the full menu overflows measurably — script.js
+   watches for that and swaps in the hamburger rather than letting the row
+   break onto two lines. */
+.corner-menu .menu-col {
+  flex: 0 0 auto;
+}
+
 .dropdown {
   position: relative;
 }
@@ -357,6 +341,7 @@ ul {
 .dropdown-toggle {
   display: flex;
   align-items: center;
+  white-space: nowrap;
   gap: 0.45rem;
   background: none;
   border: none;
@@ -458,6 +443,24 @@ ul {
   top: 1.25rem;
   left: 1.25rem;
   z-index: 30;
+}
+
+/* The swap between the full menu and the hamburger is driven by measured
+   overflow (see fitNav in script.js), not by a width guess — the menu has
+   different room on the homepage's half-width panel than in a subpage
+   header, so no single breakpoint is right for both. */
+.nav-collapsed .corner-menu {
+  display: none;
+}
+
+.nav-collapsed .mobile-nav {
+  display: block;
+}
+
+/* reserve room for the absolutely-positioned hamburger so it can't sit
+   under the wordmark */
+.nav-collapsed .story-header {
+  padding-left: 4.5rem;
 }
 
 .nav-toggle {
@@ -803,6 +806,8 @@ ul {
    participating in this row's flex layout */
 .story-wordmark {
   margin-left: auto;
+  flex: 0 0 auto;
+  white-space: nowrap;
   font-family: var(--serif);
   font-weight: 800;
   font-size: 1.05rem;
@@ -852,12 +857,6 @@ ul {
   line-height: 1.8;
   color: var(--navy);
   margin: 0;
-}
-
-.story-cta {
-  margin-top: 3.5rem;
-  padding-top: 2.5rem;
-  border-top: 1px solid var(--rule);
 }
 
 /* ---------- BOOKING PAGE ---------- */
@@ -1276,6 +1275,8 @@ ul {
     font-size: clamp(2.25rem, 10vw, 3.5rem);
   }
 
+  /* fallback for the no-JS case; with script.js running, fitNav has
+     already collapsed the nav well before this width */
   .corner-menu {
     display: none;
   }
@@ -1305,16 +1306,6 @@ ul {
     width: 64px;
     height: 90px;
     margin: 0 auto -0.5rem;
-  }
-
-  .guide-arrow-story-top {
-    display: none;
-  }
-
-  .guide-arrow-story-cta {
-    width: 70px;
-    height: 128px;
-    margin: 2rem 0 -1.5rem 0.5rem;
   }
 
   .about {
