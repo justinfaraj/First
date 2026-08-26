@@ -466,11 +466,16 @@ ul {
 .nav-toggle {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 4px;
+  /* 44px square: the smallest comfortable thumb target */
+  width: 44px;
+  height: 44px;
   background: var(--ivory);
   border: 1px solid var(--rule);
   border-radius: 8px;
-  padding: 11px 10px;
+  padding: 0;
   cursor: pointer;
 }
 
@@ -540,7 +545,10 @@ ul {
 .mobile-menu ul:nth-of-type(2) li:nth-child(1) a { animation-delay: 0.38s; }
 .mobile-menu ul:nth-of-type(2) li:nth-child(2) a { animation-delay: 0.44s; }
 
-/* the plain top-level links ("Home" first, "Book a Session" last) */
+/* The plain top-level links ("Home" first, "Book a Session" last). They sit
+   among the ABOUT/CONTACT group headers, which are identical type but not
+   tappable — the underline is what tells them apart, and it matches how
+   every other link on the site marks itself. */
 .mobile-menu-link {
   display: block;
   margin-top: 1.1rem;
@@ -549,9 +557,17 @@ ul {
   text-transform: uppercase;
   color: var(--navy);
   font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--logo-blue);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
   opacity: 0;
   animation: fadeIn 0.7s ease forwards;
   animation-delay: 0.5s;
+}
+
+.mobile-menu-link:hover {
+  text-decoration-thickness: 2px;
 }
 
 .mobile-menu-link:first-child {
@@ -1562,5 +1578,85 @@ ul {
 
   .story {
     padding: 3rem 1.75rem 5rem;
+  }
+
+  /* ----- touch targets -----
+     Standalone controls get to 44px, the smallest comfortable thumb
+     target. Links sitting inside a sentence are left alone: padding them
+     to 44px would overlap the hit areas of the lines above and below,
+     and WCAG exempts inline links for exactly that reason. */
+
+  /* min-height rather than padding arithmetic: the box lands on 44px
+     whatever the text's line box happens to measure */
+  .mobile-menu ul li a,
+  .about-link,
+  .doc-action {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  /* inline-flex, not flex: the underline that marks it as tappable should
+     hug the words rather than stretch across the whole panel */
+  .mobile-menu-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: 0.4rem;
+  }
+
+  .mobile-menu ul li {
+    margin-bottom: 0;
+  }
+
+  .mobile-menu h4 {
+    margin: 0.75rem 0 0;
+  }
+
+  .story-wordmark {
+    padding: 0.75rem 0;
+  }
+
+  /* the two actions sit side by side, so they need horizontal separation
+     as well as height before a thumb can hit them reliably */
+  .doc-actions {
+    gap: 2rem;
+  }
+
+  .book-btn,
+  .contact-submit {
+    padding: 1rem 2rem;
+  }
+
+  /* ----- legibility -----
+     Nothing under 12px: the uppercase letterspaced labels were rendering
+     between 9.9px and 11.5px, which is hard going on a phone. */
+
+  .book-btn {
+    font-size: 0.78rem;
+  }
+
+  .doc-type,
+  .mobile-menu-link,
+  .mobile-menu h4 {
+    font-size: 0.78rem;
+  }
+
+  .story .eyebrow,
+  .policy-heading {
+    font-size: 0.78rem;
+  }
+
+  .quote-attribution,
+  .quote-affiliation,
+  .form-field label {
+    font-size: 0.78rem;
+  }
+
+  /* 16px exactly: below that, iOS Safari zooms the page in when a field
+     takes focus and leaves the visitor scrolled sideways */
+  .form-field input,
+  .form-field textarea {
+    font-size: 16px;
   }
 }
