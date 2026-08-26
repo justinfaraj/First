@@ -1034,6 +1034,107 @@ ul {
   }
 }
 
+/* ---------- SEND A MESSAGE PAGE ---------- */
+
+.contact {
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 4.5rem 2rem 6rem;
+}
+
+.contact-subheading {
+  margin: 1rem 0 2.75rem;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--navy-soft);
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-field label {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: var(--ivory);
+  color: var(--navy);
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+}
+
+.form-field textarea {
+  resize: vertical;
+  min-height: 8rem;
+  line-height: 1.6;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  outline: none;
+  border-color: var(--logo-blue);
+}
+
+/* a field flagged by validation, without a red that would clash with the
+   site's navy/ivory/blue palette */
+.form-field.invalid label {
+  color: var(--logo-blue);
+}
+
+.form-field.invalid input,
+.form-field.invalid textarea {
+  border-color: var(--logo-blue);
+}
+
+.contact-helper {
+  margin: -0.5rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--navy-soft);
+}
+
+.contact-status {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--navy);
+}
+
+.contact-submit {
+  align-self: flex-start;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .contact {
+    padding: 3rem 1.75rem 4.5rem;
+  }
+
+  .contact-submit {
+    align-self: stretch;
+    text-align: center;
+  }
+}
+
 /* ---------- FAQ PAGE ---------- */
 
 .faq {

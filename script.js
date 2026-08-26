@@ -18,7 +18,7 @@ const NAV_ITEMS = [
   {
     label: 'Contact',
     items: [
-      { text: 'Send a Message', href: '#' },
+      { text: 'Send a Message', href: 'send-a-message.html' },
       { text: 'FAQ', href: 'faq.html' },
     ],
   },
@@ -306,4 +306,65 @@ document.addEventListener('DOMContentLoaded', () => {
     document.fonts.ready.then(fitNav);
   }
   fitNav();
+
+  // ---------- SEND A MESSAGE: mailto hand-off ----------
+  // There's no backend, so "submitting" this form means building a
+  // mailto: link from the field values and navigating to it — the visitor's
+  // own email client sends the actual message from their own account.
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    const nameField = document.getElementById('contact-name');
+    const emailField = document.getElementById('contact-email');
+    const messageField = document.getElementById('contact-message');
+    const statusEl = document.getElementById('contact-status');
+
+    const showStatus = (text) => {
+      statusEl.textContent = text;
+      statusEl.hidden = !text;
+    };
+
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = nameField.value.trim();
+      const email = emailField.value.trim();
+      const message = messageField.value.trim();
+
+      // Email is intentionally not required: the mailto opens from the
+      // visitor's own account regardless of what they type here.
+      const missing = [];
+      if (!name) missing.push(nameField);
+      if (!message) missing.push(messageField);
+
+      [nameField, messageField].forEach((f) => f.closest('.form-field').classList.remove('invalid'));
+
+      if (missing.length) {
+        missing.forEach((f) => f.closest('.form-field').classList.add('invalid'));
+        showStatus('Please fill in your name and message before sending.');
+        missing[0].focus();
+        return;
+      }
+
+      showStatus('');
+
+      const nameLine = email
+        ? `My name is ${name} (${email}), and I'm reaching out through your website.`
+        : `My name is ${name}, and I'm reaching out through your website.`;
+
+      const body = [
+        'Hi Meaghan,',
+        '',
+        nameLine,
+        '',
+        message,
+        '',
+        'Looking forward to hearing from you.',
+      ].join('\n');
+
+      const subject = 'New Message from Eagle Point Coaching Website';
+      const mailto = `mailto:meaghanjanedis@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+      window.location.href = mailto;
+    });
+  }
 });
