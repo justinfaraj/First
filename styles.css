@@ -1034,6 +1034,121 @@ ul {
   }
 }
 
+/* ---------- FAQ PAGE ---------- */
+
+.faq {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 4.5rem 2rem 6rem;
+}
+
+.faq-intro {
+  margin: 1.25rem 0 2.75rem;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--navy-soft);
+}
+
+.faq-link {
+  color: inherit;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-color: var(--logo-blue);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.faq-link:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* hairline above the first question so the stack reads as one list */
+.faq-list {
+  border-top: 1px solid var(--rule);
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--rule);
+}
+
+.faq-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.35rem 0;
+  cursor: pointer;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.08rem;
+  line-height: 1.4;
+  color: var(--navy);
+  /* drop the default disclosure triangle in favour of the +/- below */
+  list-style: none;
+}
+
+.faq-question::-webkit-details-marker {
+  display: none;
+}
+
+.faq-question:focus-visible {
+  outline: 2px solid var(--logo-blue);
+  outline-offset: 3px;
+}
+
+.faq-icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  color: var(--logo-blue);
+  transition: transform 0.25s ease;
+}
+
+.faq-question:hover .faq-icon {
+  transform: scale(1.15);
+}
+
+/* the plus loses its upright to become a minus when the answer opens */
+.faq-icon-bar {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.faq-item[open] .faq-icon-bar {
+  transform: scaleY(0);
+  opacity: 0;
+}
+
+.faq-answer {
+  margin: 0;
+  /* the right inset keeps the answer clear of the indicator column */
+  padding: 0 2.5rem 1.65rem 0;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--navy-soft);
+}
+
+/* answers enter exactly like the nav dropdown items */
+.faq-item[open] .faq-answer {
+  animation: fadeInUp 0.35s ease;
+}
+
+@media (max-width: 768px) {
+  .faq {
+    padding: 3rem 1.75rem 4.5rem;
+  }
+
+  .faq-question {
+    font-size: 1rem;
+    gap: 1rem;
+  }
+
+  .faq-answer {
+    padding-right: 0;
+  }
+}
+
 /* ---------- DOCUMENTS PAGE ---------- */
 
 .documents {
@@ -1221,7 +1336,8 @@ ul {
 .reduced-motion .dropdown-panel li a,
 .reduced-motion .mobile-menu h4,
 .reduced-motion .mobile-menu ul li a,
-.reduced-motion .mobile-menu-link {
+.reduced-motion .mobile-menu-link,
+.reduced-motion .faq-item[open] .faq-answer {
   animation: none !important;
   opacity: 1 !important;
   transform: none !important;

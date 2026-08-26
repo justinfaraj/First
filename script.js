@@ -19,7 +19,7 @@ const NAV_ITEMS = [
     label: 'Contact',
     items: [
       { text: 'Send a Message', href: '#' },
-      { text: 'FAQ', href: '#' },
+      { text: 'FAQ', href: 'faq.html' },
     ],
   },
   { label: 'Book a Session', href: 'book-a-session.html' },
