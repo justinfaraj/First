@@ -247,11 +247,6 @@ ul {
   width: 156px;
 }
 
-/* compact callout-to-photo curl; shown only below 768px, see media query */
-.guide-arrow-callout-mobile {
-  display: none;
-}
-
 /* Variant B: left margin, carrying the eye from the navy About band down
    across the boundary into the testimonials. Arrows mark handoffs between
    sections only — never a flourish inside one section's own content. */
@@ -1478,26 +1473,45 @@ ul {
   /* photo stacks below the branding/text */
   .panel-left {
     order: 1;
+    /* fills the opening screen and centers the headline/button block
+       inside it, rather than leaving that block pinned to the top under
+       the hamburger — the photo now sits a scroll below, on its own */
+    min-height: 100svh;
+    justify-content: center;
     padding: 4.5rem 1.75rem 2.5rem;
   }
 
   .panel-right {
     order: 2;
-    padding: 2.5rem 0 0;
+    /* left padding matches panel-left's, so the photo lines up under the
+       headline above it; the photo itself stays narrower than the full
+       width (see .meaghan-photo) so the callout has real room beside it
+       on the right, rather than sitting on top of her */
+    padding: 2.5rem 1.75rem 0;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
   }
 
   .meaghan-photo {
     height: auto;
-    width: 72%;
-    max-width: 360px;
+    width: 62%;
+    max-width: 280px;
   }
 
+  /* Sits beside the photo, not over it — at this width there isn't
+     enough clear background next to her head to hold two lines of text
+     without crossing onto her face, so the photo stays narrower and
+     left-aligned, leaving a genuine gap on the right for the callout.
+     top:33% lands it a little above where her shoulders widen out, and
+     right:1.75rem lines its edge up with the headline block above. */
   .photo-callout {
-    position: static;
-    margin-bottom: 0.25rem;
-    font-size: 1.2rem;
+    position: absolute;
+    top: 33%;
+    right: 1.75rem;
+    width: 7.25rem;
+    font-size: 0.92rem;
+    line-height: 1.35;
+    text-align: right;
   }
 
   .vertical-label {
@@ -1528,17 +1542,10 @@ ul {
   }
 
   /* the tall hero arrow would leave a gap under the stacked photo here,
-     so it hides and a compact curl runs from the callout into the photo
-     instead (in-flow, so it can never leave a gap of its own) */
+     so it hides; the callout-to-photo curl that used to fill that gap is
+     gone too, now that the callout sits on the photo instead of above it */
   .guide-arrow-hero {
     display: none;
-  }
-
-  .guide-arrow-callout-mobile {
-    display: block;
-    width: 64px;
-    height: 90px;
-    margin: 0 auto -0.5rem;
   }
 
   .about {
