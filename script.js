@@ -93,7 +93,7 @@ function renderFooter() {
   return `
     <footer class="site-footer">
       <div class="site-footer-inner">
-        <p class="footer-copyright">Copyright &copy; 2025 Eagle Point Coaching LLC. All Rights Reserved.</p>
+        <p class="footer-copyright">Copyright &copy; 2026 Eagle Point Coaching LLC. All Rights Reserved.</p>
         <p class="footer-credit">Website developed by Justin Farajollah. Email <a href="mailto:farajollahjustin@gmail.com" class="footer-link">farajollahjustin@gmail.com</a> to make your website vision a reality.</p>
       </div>
     </footer>
@@ -113,19 +113,89 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.add('reduced-motion');
   }
 
-  // Vertical edge label tracks whichever section is currently in view
+  // Vertical edge label: tracks whichever section is in view, and stays
+  // readable by splitting its ink at the exact pixel where the band behind
+  // it changes — the navy copy shows over ivory, the ivory copy over navy,
+  // so a word straddling a boundary is half one colour and half the other.
   const sectionLabel = document.getElementById('section-label');
   const sections = document.querySelectorAll('[data-label]');
-  if (sectionLabel && sections.length && 'IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          sectionLabel.textContent = entry.target.dataset.label;
-          sectionLabel.classList.toggle('on-dark', entry.target.classList.contains('section-dark'));
-        }
+
+  if (sectionLabel) {
+    const labelTexts = sectionLabel.querySelectorAll('.vertical-label-text');
+    const navyLayer = sectionLabel.querySelector('.vertical-label-navy');
+    const ivoryLayer = sectionLabel.querySelector('.vertical-label-ivory');
+    // every navy band on the page, the injected footer included
+    const darkBands = document.querySelectorAll('.section-dark, .site-footer');
+
+    const clipTo = (layer, top, bottom) => {
+      layer.style.clipPath = `inset(${top}px 0 ${bottom}px 0)`;
+    };
+
+    const updateLabelSplit = () => {
+      if (!navyLayer || !ivoryLayer) return;
+      const rect = sectionLabel.getBoundingClientRect();
+      const height = rect.height;
+      if (!height) return;
+
+      // how much of the label's own box sits over a navy band
+      let darkTop = null;
+      let darkBottom = null;
+      darkBands.forEach((band) => {
+        const b = band.getBoundingClientRect();
+        const top = Math.max(rect.top, b.top);
+        const bottom = Math.min(rect.bottom, b.bottom);
+        if (bottom <= top) return;
+        darkTop = darkTop === null ? top : Math.min(darkTop, top);
+        darkBottom = darkBottom === null ? bottom : Math.max(darkBottom, bottom);
       });
-    }, { rootMargin: '-45% 0px -45% 0px' });
-    sections.forEach((section) => observer.observe(section));
+
+      if (darkTop === null) {
+        clipTo(ivoryLayer, height / 2, height / 2);  // nothing showing
+        clipTo(navyLayer, 0, 0);
+        return;
+      }
+
+      const insetTop = darkTop - rect.top;
+      const insetBottom = rect.bottom - darkBottom;
+      clipTo(ivoryLayer, insetTop, insetBottom);
+
+      // the navy copy takes the remainder — whichever side the boundary
+      // left room on (a band shorter than the label can't happen here,
+      // so at most one edge falls inside)
+      if (insetTop >= insetBottom) {
+        clipTo(navyLayer, 0, height - insetTop);
+      } else {
+        clipTo(navyLayer, height - insetBottom, 0);
+      }
+    };
+
+    let pending = false;
+    const scheduleLabelUpdate = () => {
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(() => {
+        pending = false;
+        updateLabelSplit();
+      });
+    };
+
+    window.addEventListener('scroll', scheduleLabelUpdate, { passive: true });
+    window.addEventListener('resize', scheduleLabelUpdate);
+
+    if (sections.length && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          // a longer or shorter word changes the label's height, so the
+          // split has to be remeasured alongside the text swap
+          labelTexts.forEach((node) => { node.textContent = entry.target.dataset.label; });
+          updateLabelSplit();
+        });
+      }, { rootMargin: '-45% 0px -45% 0px' });
+      sections.forEach((section) => observer.observe(section));
+    }
+
+    updateLabelSplit();
   }
 
   // Corner-menu dropdowns

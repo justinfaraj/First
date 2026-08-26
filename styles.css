@@ -80,24 +80,52 @@ ul {
 
 /* ---------- VERTICAL SECTION LABEL ---------- */
 
+/* Only a translate here, deliberately: the two layers below are clipped in
+   screen-aligned pixels, so no ancestor may rotate their coordinate space.
+   The rotation lives on .vertical-label-text instead. */
 .vertical-label {
   position: fixed;
   top: 50%;
   left: 1.25rem;
-  transform: translateY(-50%) rotate(180deg);
+  transform: translateY(-50%);
+  z-index: 40;
+  pointer-events: none;
+}
+
+.vertical-label-layer {
+  display: block;
+}
+
+/* the first copy stays in flow and gives the wrapper its size; the second
+   stacks exactly on top of it */
+.vertical-label-layer + .vertical-label-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.vertical-label-text {
+  display: block;
   writing-mode: vertical-rl;
+  transform: rotate(180deg);
   text-transform: uppercase;
   letter-spacing: 0.3em;
   font-size: 0.7rem;
   font-weight: 500;
-  color: var(--navy-soft);
-  z-index: 40;
-  transition: color 0.3s ease;
-  pointer-events: none;
 }
 
-.vertical-label.on-dark {
+.vertical-label-navy .vertical-label-text {
+  color: var(--navy-soft);
+}
+
+.vertical-label-ivory .vertical-label-text {
   color: var(--ivory);
+}
+
+/* until the first measurement lands, show only the navy copy — every page
+   opens on an ivory band */
+.vertical-label-ivory {
+  clip-path: inset(50% 0 50% 0);
 }
 
 /* ---------- HEADLINE ---------- */
@@ -223,56 +251,22 @@ ul {
   display: none;
 }
 
-/* Variant B: left side of the About section, pointing into the story link */
-.guide-arrow-about {
-  position: absolute;
-  left: 16%;
-  bottom: 9rem;
-  width: 130px;
-  height: 295px;
-}
-
-/* Variant E: left margin, carrying the eye from the navy About band down
-   across the boundary into the first testimonial */
+/* Variant B: left margin, carrying the eye from the navy About band down
+   across the boundary into the testimonials. Arrows mark handoffs between
+   sections only — never a flourish inside one section's own content. */
 .guide-arrow-testimonials {
   position: absolute;
   left: 4%;
-  /* starts inside the About band above and lands just short of quote 1 */
+  /* starts inside the About band above and lands just short of the heading */
   top: -170px;
   width: 120px;
   height: 370px;
 }
 
-/* Zigzag guides: in-flow between quote blocks, so they always land in the
-   gap no matter how the quotes above them wrap */
-.guide-arrow-zigzag {
-  display: block;
-  align-self: center;
-  height: auto;
-  /* pull the flex gap back in — the arrow's own sweep is the whitespace */
-  margin: -2.25rem 0;
-}
-
-.guide-arrow-zigzag-a {
-  width: 40%;
-  aspect-ratio: 312 / 136;
-}
-
-.guide-arrow-zigzag-b {
-  width: 52%;
-  aspect-ratio: 526 / 150;
-}
-
-/* compact quote-to-quote curl; shown only below 768px, see media query */
-.guide-arrow-quotes-mobile {
-  display: none;
-}
-
-/* the centered content columns grow to fill more of the width as the
-   viewport narrows, so these left-margin arrows start running into their
+/* the centered content column grows to fill more of the width as the
+   viewport narrows, so this left-margin arrow starts running into the
    text below this point — hide rather than let them overlap */
 @media (max-width: 1400px) {
-  .guide-arrow-about,
   .guide-arrow-testimonials {
     display: none;
   }
@@ -665,13 +659,22 @@ ul {
 
 /* ---------- SECTION 3: TESTIMONIALS ---------- */
 
+/* one screenful, like every other section: the three quotes sit centered
+   in a full-height band rather than scrolling within it */
 .testimonials {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: var(--ivory);
-  padding: 6rem 2rem 7rem;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 4rem 2rem;
 }
 
 .testimonials-inner {
+  width: 100%;
   max-width: 62rem;
   margin: 0 auto;
 }
@@ -681,7 +684,7 @@ ul {
   font-weight: 700;
   font-size: clamp(2.25rem, 3.6vw, 3.25rem);
   line-height: 1.05;
-  margin: 0 0 4rem;
+  margin: 0 0 2.75rem;
   text-align: center;
   text-wrap: balance;
   color: var(--navy);
@@ -692,7 +695,7 @@ ul {
 .quote-stack {
   display: flex;
   flex-direction: column;
-  gap: 5rem;
+  gap: 2.5rem;
 }
 
 .quote-block {
@@ -1165,23 +1168,8 @@ ul {
     margin: 0 auto -0.5rem;
   }
 
-  .guide-arrow-about,
   .guide-arrow-story-top {
     display: none;
-  }
-
-  /* the zigzag collapses to a single column below this width, so the two
-     horizontal weaves give way to one compact downward curl */
-  .guide-arrow-zigzag {
-    display: none;
-  }
-
-  .guide-arrow-quotes-mobile {
-    display: block;
-    align-self: center;
-    width: 58px;
-    height: 82px;
-    margin: -0.5rem 0;
   }
 
   .guide-arrow-story-cta {
@@ -1199,15 +1187,12 @@ ul {
   }
 
   .testimonials {
+    min-height: 0;
     padding: 3.5rem 1.75rem 4.5rem;
   }
 
   .testimonials-heading {
-    margin-bottom: 2.5rem;
-  }
-
-  .quote-stack {
-    gap: 2.75rem;
+    margin-bottom: 2.25rem;
   }
 
   /* one column, all flush left — right-ragged body copy reads poorly at
