@@ -11,7 +11,7 @@ const NAV_ITEMS = [
     label: 'About',
     items: [
       { text: "Meaghan's Story", href: 'about-meaghan.html' },
-      { text: 'Testimonials', section: 'testimonials' },
+      { text: 'Testimonials', href: 'testimonials.html' },
       { text: 'Documents', href: 'documents.html' },
     ],
   },

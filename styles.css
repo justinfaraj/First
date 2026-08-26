@@ -3,6 +3,7 @@
   --navy: #0D2844;       /* all primary text, headlines, buttons, dark sections */
   --logo-blue: #62A2E0;  /* NON-TEXT ONLY: logo mark, accents, hover states, dots, rules */
   --navy-soft: rgba(13, 40, 68, 0.7);  /* secondary text, captions, nav sub-items */
+  --ivory-soft: rgba(255, 254, 246, 0.72); /* the same, on navy bands */
   --rule: rgba(13, 40, 68, 0.12);      /* hairlines, dividers, borders */
   --serif: 'Playfair Display', Georgia, serif;
   --script: 'Great Vibes', cursive;
@@ -750,6 +751,28 @@ ul {
   margin-top: 0.55rem;
 }
 
+.testimonials-more {
+  margin: 2.25rem 0 0;
+  text-align: center;
+}
+
+/* short desktop viewports (a laptop with browser chrome) would otherwise
+   push this section a few pixels past one screen — tighten rather than
+   let it be the one section you have to scroll inside */
+@media (min-width: 769px) and (max-height: 780px) {
+  .testimonials {
+    padding: 2.5rem 2rem;
+  }
+
+  .testimonials-heading {
+    margin-bottom: 2rem;
+  }
+
+  .quote-stack {
+    gap: 2rem;
+  }
+}
+
 .quote-affiliation {
   display: block;
   margin-top: 0.4rem;
@@ -893,6 +916,86 @@ ul {
   .calendly-inline-widget {
     height: 1050px;
     min-height: 900px;
+  }
+}
+
+/* ---------- TESTIMONIALS PAGE ---------- */
+
+/* the ivory intro block is the first beat of the alternation the entries
+   continue: intro ivory, then navy, ivory, navy, ivory, then the navy
+   footer — so the page alternates cleanly end to end */
+.testimonials-intro {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 4.5rem 2rem 3rem;
+}
+
+.testimonials-intro .story-heading {
+  margin-bottom: 1rem;
+}
+
+.testimonials-intro-text {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--navy-soft);
+}
+
+/* one column, full-width bands: these run from one paragraph to four, and
+   a zigzag or grid would leave the mismatched heights looking broken. The
+   background change between entries is the divider. */
+.testimonial-entry {
+  width: 100%;
+  margin: 0;
+}
+
+.testimonial-entry-inner {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 4.5rem 2rem;
+}
+
+.testimonial-quote {
+  margin: 0 0 1.5rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--navy);
+}
+
+.testimonial-quote p {
+  /* a notch under the homepage pull-quotes: at display size, four
+     paragraphs of italic serif would be tiring to read */
+  margin: 0 0 1.15rem;
+  font-size: 1.1rem;
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+
+.testimonial-quote p:last-child {
+  margin-bottom: 0;
+}
+
+.section-dark .testimonial-quote {
+  color: var(--ivory);
+}
+
+.section-dark .quote-attribution {
+  color: var(--ivory-soft);
+}
+
+@media (max-width: 768px) {
+  .testimonials-intro {
+    padding: 3rem 1.75rem 2.25rem;
+  }
+
+  .testimonial-entry-inner {
+    padding: 3rem 1.75rem;
+  }
+
+  .testimonial-quote p {
+    font-size: 1.02rem;
+    line-height: 1.7;
   }
 }
 
