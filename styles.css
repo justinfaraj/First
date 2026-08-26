@@ -945,8 +945,42 @@ ul {
    a zigzag or grid would leave the mismatched heights looking broken. The
    background change between entries is the divider. */
 .testimonial-entry {
+  position: relative;
   width: 100%;
   margin: 0;
+}
+
+/* One arrow per band handoff, alternating sides down the page starting on
+   the right. Each is anchored to the entry it leads into and reaches up
+   across the boundary above it — the same crossing gesture the homepage
+   arrow makes on the way into the testimonials. */
+.guide-arrow-testi-step {
+  position: absolute;
+  top: -128px;
+  width: 108px;
+  height: 270px;
+  z-index: 6;
+}
+
+.guide-arrow-testi-step.on-right {
+  right: 6%;
+}
+
+.guide-arrow-testi-step.on-left {
+  left: 6%;
+}
+
+/* mirrored so two path shapes read as four distinct arrows */
+.guide-arrow-testi-step.flip {
+  transform: scaleX(-1);
+}
+
+/* below this the margins outside the 46rem column are too thin to hold an
+   arrow clear of the text */
+@media (max-width: 1150px) {
+  .guide-arrow-testi-step {
+    display: none;
+  }
 }
 
 .testimonial-entry-inner {
