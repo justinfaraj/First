@@ -950,15 +950,17 @@ ul {
   margin: 0;
 }
 
-/* One arrow per band handoff, alternating sides down the page starting on
-   the right. Each is anchored to the entry it leads into and reaches up
-   across the boundary above it — the same crossing gesture the homepage
-   arrow makes on the way into the testimonials. */
+/* One arrow per handoff between testimonials, alternating sides down the
+   page starting on the right. Each is anchored to the entry it leads into
+   and reaches up across the boundary above it — the same crossing gesture
+   the homepage arrow makes on the way into the testimonials. The heading
+   hands straight off to the first quote with no arrow between them. */
 .guide-arrow-testi-step {
   position: absolute;
-  top: -128px;
+  top: -190px;
+  /* 108 x 382 matches the 130 x 460 viewBox, so nothing letterboxes */
   width: 108px;
-  height: 270px;
+  height: 382px;
   z-index: 6;
 }
 
