@@ -250,67 +250,6 @@ ul {
   }
 }
 
-/* ---------- PHOTO INTERLUDE ---------- */
-
-/* A visual pause between the hero and the bio content, not a content
-   section: full width, no heading, no ivory/navy slot of its own. The img
-   handles every viewport by default (object-fit: cover, static); the
-   min-width query above the mobile breakpoint swaps in a fixed background
-   for a subtle parallax instead, since a fixed background is what actually
-   produces the effect — an <img> can't scroll slower than its own box. */
-.photo-interlude {
-  position: relative;
-  width: 100%;
-  height: 56vh;
-  overflow: hidden;
-}
-
-.photo-interlude-img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-@media (min-width: 769px) {
-  .photo-interlude-img {
-    display: none;
-  }
-
-  .photo-interlude {
-    background-image: url('assets/images/handshake.jpg');
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-  }
-}
-
-.guide-arrow-interlude {
-  position: absolute;
-  left: 4%;
-  /* starts inside the photo interlude above and lands just short of the
-     "Meet Meaghan Janedis" heading */
-  top: -140px;
-  width: 110px;
-  height: 250px;
-}
-
-/* same reasoning as .guide-arrow-testimonials: the centered content column
-   widens as the viewport narrows and would start running into this arrow */
-@media (max-width: 1400px) {
-  .guide-arrow-interlude {
-    display: none;
-  }
-}
-
-/* scroll-linked motion counts too — let a fixed background scroll normally */
-@media (prefers-reduced-motion: reduce) and (min-width: 769px) {
-  .photo-interlude {
-    background-attachment: scroll;
-  }
-}
-
 /* ---------- RIGHT PANEL: PHOTO + CALLOUT ---------- */
 
 .meaghan-photo {
