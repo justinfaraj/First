@@ -124,8 +124,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const labelTexts = sectionLabel.querySelectorAll('.vertical-label-text');
     const navyLayer = sectionLabel.querySelector('.vertical-label-navy');
     const ivoryLayer = sectionLabel.querySelector('.vertical-label-ivory');
-    // every navy band on the page, the injected footer included
-    const darkBands = document.querySelectorAll('.section-dark, .site-footer');
+    // every navy band on the page, the injected footer included, plus the
+    // photo band, whose left edge is shaded navy behind the label
+    const darkBands = document.querySelectorAll('.section-dark, .site-footer, .photo-band-frame');
 
     const clipTo = (layer, top, bottom) => {
       layer.style.clipPath = `inset(${top}px 0 ${bottom}px 0)`;
@@ -196,6 +197,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     updateLabelSplit();
+  }
+
+  // ---------- PHOTO BAND PARALLAX ----------
+  // A transform, not background-attachment: fixed, so both faces and the
+  // handshake stay in frame together, and it still runs on iOS Safari.
+  const bandImg = document.querySelector('.photo-band-img');
+  if (bandImg && !prefersReducedMotion) {
+    const bandFrame = bandImg.parentElement;
+    let bandPending = false;
+
+    const updateBand = () => {
+      bandPending = false;
+      const rect = bandFrame.getBoundingClientRect();
+      const vh = window.innerHeight;
+      if (rect.bottom < 0 || rect.top > vh) return;
+      // -1 entering from below, 0 centred in the viewport, 1 leaving above
+      const progress = (vh / 2 - (rect.top + rect.height / 2)) / (vh / 2 + rect.height / 2);
+      const shift = Math.max(-1, Math.min(1, progress)) * rect.height * 0.08;
+      bandImg.style.transform = `translate3d(0, ${shift.toFixed(1)}px, 0)`;
+    };
+
+    const scheduleBand = () => {
+      if (bandPending) return;
+      bandPending = true;
+      requestAnimationFrame(updateBand);
+    };
+
+    window.addEventListener('scroll', scheduleBand, { passive: true });
+    window.addEventListener('resize', scheduleBand);
+    updateBand();
   }
 
   // Corner-menu dropdowns

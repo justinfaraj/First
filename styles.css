@@ -572,6 +572,102 @@ ul {
   color: var(--ivory);
 }
 
+/* ---------- PHOTO BAND ---------- */
+
+.photo-band {
+  position: relative;
+  height: 78vh;
+  height: 78svh;
+  min-height: 34rem;
+  max-height: 52rem;
+}
+
+.photo-band-frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--navy);
+}
+
+/* 8% overscan top and bottom is the parallax travel set in script.js */
+.photo-band-img {
+  position: absolute;
+  top: -8%;
+  left: 0;
+  width: 100%;
+  height: 116%;
+  object-fit: cover;
+  object-position: 47% 30%;
+}
+
+/* darkens the left edge so the vertical section label reads over the photo */
+.photo-band-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 7rem;
+  background: linear-gradient(90deg, rgba(13, 40, 68, 0.5), rgba(13, 40, 68, 0));
+  pointer-events: none;
+}
+
+.photo-band-card {
+  position: absolute;
+  left: 5.5rem;
+  bottom: 3.5rem;
+  z-index: 2;
+  box-sizing: border-box;
+  max-width: 24rem;
+  padding: 2rem 2.25rem 2.25rem;
+  background: rgba(255, 254, 246, 0.94);
+  border-left: 3px solid var(--logo-blue);
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(13, 40, 68, 0.18);
+}
+
+.photo-band-heading {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(1.9rem, 2.6vw, 2.5rem);
+  line-height: 1.05;
+  color: var(--navy);
+  margin: 0;
+}
+
+.photo-band-text {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: var(--navy-soft);
+  margin: 0.75rem 0 1.75rem;
+}
+
+/* below this width the card would cover the people, so it drops under the photo */
+@media (max-width: 1100px) {
+  .photo-band {
+    height: auto;
+    min-height: 0;
+    max-height: none;
+  }
+
+  .photo-band-frame {
+    position: relative;
+    height: 60vh;
+    height: 60svh;
+    min-height: 20rem;
+  }
+
+  .photo-band-card {
+    position: static;
+    max-width: none;
+    padding: 3rem 5.5rem 3.5rem;
+    background: var(--ivory);
+    border-left: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+
 /* ---------- SECTION 2: ABOUT ---------- */
 
 .about {
@@ -1521,6 +1617,21 @@ ul {
      gone too, now that the callout sits on the photo instead of above it */
   .guide-arrow-hero {
     display: none;
+  }
+
+  .photo-band-frame {
+    height: 46vh;
+    height: 46svh;
+    min-height: 18rem;
+  }
+
+  /* the vertical label is hidden at this width, so its edge shading goes too */
+  .photo-band-frame::after {
+    display: none;
+  }
+
+  .photo-band-card {
+    padding: 2.5rem 1.75rem 3rem;
   }
 
   .about {
