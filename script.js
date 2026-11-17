@@ -94,7 +94,7 @@ function renderFooter() {
     <footer class="site-footer">
       <div class="site-footer-inner">
         <p class="footer-copyright">Copyright &copy; 2026 Eagle Point Coaching LLC. All Rights Reserved.</p>
-        <p class="footer-credit">Website developed by Justin Farajollah. Email <a href="mailto:farajollahjustin@gmail.com" class="footer-link">farajollahjustin@gmail.com</a> to make your website vision a reality.</p>
+        <p class="footer-credit">Website developed by Justin Farajollah. Visit <a href="https://justinfarajollah.com" class="footer-link">justinfarajollah.com</a> to make your website vision a reality.</p>
       </div>
     </footer>
   `;
