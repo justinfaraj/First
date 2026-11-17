@@ -214,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (rect.bottom < 0 || rect.top > vh) return;
       // -1 entering from below, 0 centred in the viewport, 1 leaving above
       const progress = (vh / 2 - (rect.top + rect.height / 2)) / (vh / 2 + rect.height / 2);
-      const shift = Math.max(-1, Math.min(1, progress)) * rect.height * 0.08;
+      const shift = Math.max(-1, Math.min(1, progress)) * rect.height * 0.11;
       bandImg.style.transform = `translate3d(0, ${shift.toFixed(1)}px, 0)`;
     };
 

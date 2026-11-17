@@ -589,13 +589,13 @@ ul {
   background: var(--navy);
 }
 
-/* 8% overscan top and bottom is the parallax travel set in script.js */
+/* 11% overscan top and bottom is the parallax travel set in script.js */
 .photo-band-img {
   position: absolute;
-  top: -8%;
+  top: -11%;
   left: 0;
   width: 100%;
-  height: 116%;
+  height: 122%;
   object-fit: cover;
   object-position: 47% 30%;
 }
@@ -639,7 +639,7 @@ ul {
   font-size: 1.05rem;
   line-height: 1.5;
   color: var(--navy-soft);
-  margin: 0.75rem 0 1.75rem;
+  margin: 0.75rem 0 0.5rem;
 }
 
 /* below this width the card would cover the people, so it drops under the photo */
