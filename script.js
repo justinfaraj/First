@@ -229,6 +229,41 @@ document.addEventListener('DOMContentLoaded', () => {
     updateBand();
   }
 
+  // ---------- MOBILE HERO PHOTO PARALLAX ----------
+  // On phones the coach's photo sits in its own stacked panel; it drifts down
+  // slightly slower than the page scrolls. The panel clips the bottom, and the
+  // gap that opens above is ivory on ivory, so nothing shows.
+  const heroPhoto = document.querySelector('.meaghan-photo');
+  const heroPanel = document.querySelector('.panel-right');
+  const phoneQuery = window.matchMedia('(max-width: 768px)');
+  if (heroPhoto && heroPanel && !prefersReducedMotion) {
+    let heroPending = false;
+
+    const updateHeroPhoto = () => {
+      heroPending = false;
+      if (!phoneQuery.matches) {
+        heroPhoto.style.transform = '';
+        return;
+      }
+      const rect = heroPanel.getBoundingClientRect();
+      const vh = window.innerHeight;
+      if (rect.bottom < 0 || rect.top > vh) return;
+      // 0 as the panel enters from below, 1 as it leaves above
+      const progress = Math.max(0, Math.min(1, (vh - rect.top) / (vh + rect.height)));
+      heroPhoto.style.transform = `translate3d(0, ${(progress * 32).toFixed(1)}px, 0)`;
+    };
+
+    const scheduleHeroPhoto = () => {
+      if (heroPending) return;
+      heroPending = true;
+      requestAnimationFrame(updateHeroPhoto);
+    };
+
+    window.addEventListener('scroll', scheduleHeroPhoto, { passive: true });
+    window.addEventListener('resize', scheduleHeroPhoto);
+    updateHeroPhoto();
+  }
+
   // Corner-menu dropdowns
   const dropdowns = document.querySelectorAll('.corner-menu .dropdown');
   dropdowns.forEach((dropdown) => {
