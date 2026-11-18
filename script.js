@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (rect.bottom < 0 || rect.top > vh) return;
       // 0 as the panel enters from below, 1 as it leaves above
       const progress = Math.max(0, Math.min(1, (vh - rect.top) / (vh + rect.height)));
-      heroPhoto.style.transform = `translate3d(0, ${(progress * 32).toFixed(1)}px, 0)`;
+      heroPhoto.style.transform = `translate3d(0, ${(progress * 48).toFixed(1)}px, 0)`;
     };
 
     const scheduleHeroPhoto = () => {
