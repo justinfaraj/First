@@ -1630,8 +1630,15 @@ ul {
     display: none;
   }
 
+  /* text first, photo underneath */
+  .photo-band {
+    display: flex;
+    flex-direction: column;
+  }
+
   .photo-band-card {
-    padding: 2.5rem 1.75rem 3rem;
+    order: -1;
+    padding: 2.75rem 1.75rem 2.25rem;
   }
 
   .about {
